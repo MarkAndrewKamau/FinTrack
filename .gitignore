@@ -1,0 +1,30 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Django specific files
+db.sqlite3
+*.log
+
+# Virtual environment
+venv/
+env/
+*.env
+
+# IDEs and editors
+.vscode/
+.idea/
+
+# Django migrations
+**/migrations/*
+
+# Static and media files (uncomment if you store these elsewhere or generate them dynamically)
+# staticfiles/
+# media/
+
+# Local settings (uncomment if you have a separate settings file for local development)
+# local_settings.py
+
+# Backup files
+*.bak
+*.swp
