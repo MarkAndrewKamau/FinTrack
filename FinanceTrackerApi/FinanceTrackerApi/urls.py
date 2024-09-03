@@ -15,19 +15,22 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from FinanceApp.views import ExpenseViewSet, IncomeViewSet, BudgetViewSet, FinancialReportAPIView
+from FinanceApp.views import ExpenseViewSet, IncomeViewSet, BudgetViewSet, FinancialReportAPIView, RegistrationView, UserViewSet
 
 router = DefaultRouter()
-router.register(r'expenses', ExpenseViewSet)
-router.register(r'incomes', IncomeViewSet)
-router.register(r'budgets', BudgetViewSet)
+router.register(r'users', UserViewSet, basename='user')
+router.register(r'expenses', ExpenseViewSet, basename='expense')
+router.register(r'incomes', IncomeViewSet, basename='income')
+router.register(r'budgets', BudgetViewSet, basename='budget')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('financial-report/', FinancialReportAPIView.as_view(), name='financial_report'),
+    path('register/', RegistrationView.as_view(), name='register'),
+    path('', include(router.urls))
 ]
