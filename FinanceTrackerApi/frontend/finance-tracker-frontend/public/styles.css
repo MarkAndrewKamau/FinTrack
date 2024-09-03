@@ -1,25 +1,18 @@
-/* This is our global Styles */
-body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f7fa;
-}
+/* Import Tailwind CSS */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 
-#root {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+/* Custom styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f0f2f5;
 }
 
 .container {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-/* Utility classes */
-.text-center {
-    text-align: center;
-}
+/* Add more custom styles as needed */

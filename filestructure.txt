@@ -52,14 +52,25 @@
                 |-- App.js
                 |-- App.test.js
                 |-- components
+                    |-- BudgetForm.js
+                    |-- Dashboard.js
                     |-- ExpenseForm.js
+                    |-- ExpenseList.js
+                    |-- FinancialReport.js
                     |-- Footer.js
                     |-- Header.js
+                    |-- IncomeForm.js
+                    |-- IncomeList.js
                 |-- index.css
                 |-- index.js
                 |-- logo.svg
                 |-- pages
+                    |-- BudgetPage.js
+                    |-- ExpensesPage.js
                     |-- Homepage.js
+                    |-- IncomePage.js
+                    |-- ProfilePage.js
+                    |-- ReportPage.js
                 |-- reportWebVitals.js
                 |-- setupTests.js
     |-- manage.py
