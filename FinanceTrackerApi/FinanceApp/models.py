@@ -26,9 +26,15 @@ class Income(models.Model):
 
 class Budget(models.Model):
     """Model for the Budget Tracking"""
+    category_choices = [
+        ('Income', 'Income'),
+        ('Expense', 'Expense'),
+        ('Savings', 'Savings'),
+    ]
+
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
-    category = models.CharField(max_length=50)
+    category = models.CharField(max_length=50, choices=category_choices)
     start_date = models.DateField()
     end_date = models.DateField()
 
