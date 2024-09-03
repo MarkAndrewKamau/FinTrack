@@ -1,6 +1,11 @@
 
 venv
+node_modules
+
+
+venv
 
 myenv
 venv
 node_modules
+
