@@ -17,9 +17,17 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.routers import DefaultRouter
+from FinanceApp.views import ExpenseViewSet, IncomeViewSet, BudgetViewSet, FinancialReportAPIView
+
+router = DefaultRouter()
+router.register(r'expenses', ExpenseViewSet)
+router.register(r'incomes', IncomeViewSet)
+router.register(r'budgets', BudgetViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('financial-report/', FinancialReportAPIView.as_view(), name='financial_report'),
 ]
