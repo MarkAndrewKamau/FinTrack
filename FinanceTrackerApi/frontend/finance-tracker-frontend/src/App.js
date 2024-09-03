@@ -1,8 +1,8 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import HomePage from './pages/Homepage.js';
+import HomePage from './pages/Homepage';
 import ExpensesPage from './pages/ExpensesPage';
 import IncomePage from './pages/IncomePage';
 import BudgetPage from './pages/BudgetPage';
@@ -15,14 +15,14 @@ function App() {
       <div className="App">
         <Header />
         <main>
-          <Switch>
-            <Route exact path="/" component={HomePage} />
-            <Route path="/expenses" component={ExpensesPage} />
-            <Route path="/income" component={IncomePage} />
-            <Route path="/budget" component={BudgetPage} />
-            <Route path="/report" component={ReportPage} />
-            <Route path="/profile" component={ProfilePage} />
-          </Switch>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/expenses" element={<ExpensesPage />} />
+            <Route path="/income" element={<IncomePage />} />
+            <Route path="/budget" element={<BudgetPage />} />
+            <Route path="/report" element={<ReportPage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+          </Routes>
         </main>
         <Footer />
       </div>
