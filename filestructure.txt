@@ -74,6 +74,7 @@
                 |-- reportWebVitals.js
                 |-- setupTests.js
     |-- manage.py
+    |-- requirements.txt
     |-- templates
         |-- index.html
 |-- README.md
