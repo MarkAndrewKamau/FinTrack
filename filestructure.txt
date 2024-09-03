@@ -52,6 +52,7 @@
                 |-- App.js
                 |-- App.test.js
                 |-- components
+                    |-- Header.js
                 |-- index.css
                 |-- index.js
                 |-- logo.svg
