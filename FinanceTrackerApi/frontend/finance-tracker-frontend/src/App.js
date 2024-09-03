@@ -9,25 +9,25 @@ import BudgetPage from './pages/BudgetPage';
 import ReportPage from './pages/ReportPage';
 import ProfilePage from './pages/ProfilePage';
 
-const App = () => {
-    return (
-        <Router>
-            <div className="app">
-                <Header />
-                <main>
-                    <Switch>
-                        <Route path="/" component={HomePage} exact />
-                        <Route path="/expenses" component={ExpensesPage} />
-                        <Route path="/income" component={IncomePage} />
-                        <Route path="/budget" component={BudgetPage} />
-                        <Route path="/reports" component={ReportPage} />
-                        <Route path="/profile" component={ProfilePage} />
-                    </Switch>
-                </main>
-                <Footer />
-            </div>
-        </Router>
-    );
+function App() {
+  return (
+    <Router>
+      <div className="App">
+        <Header />
+        <main>
+          <Switch>
+            <Route exact path="/" component={HomePage} />
+            <Route path="/expenses" component={ExpensesPage} />
+            <Route path="/income" component={IncomePage} />
+            <Route path="/budget" component={BudgetPage} />
+            <Route path="/report" component={ReportPage} />
+            <Route path="/profile" component={ProfilePage} />
+          </Switch>
+        </main>
+        <Footer />
+      </div>
+    </Router>
+  );
 }
 
 export default App;
