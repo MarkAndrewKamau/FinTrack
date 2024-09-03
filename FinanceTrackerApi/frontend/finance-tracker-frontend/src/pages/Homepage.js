@@ -1,5 +1,5 @@
 import React from 'react';
-import Dashboard from '../components/Dashboard';
+import Dashboard from '../components/Dashboard.js';
 import ExpenseForm from '../components/ExpenseForm';
 import IncomeForm from '../components/IncomeForm';
 
