@@ -2,13 +2,6 @@
 |-- FinanceTrackerApi
     |-- FinanceApp
         |-- __init__.py
-        |-- __pycache__
-            |-- __init__.cpython-311.pyc
-            |-- admin.cpython-311.pyc
-            |-- apps.cpython-311.pyc
-            |-- models.cpython-311.pyc
-            |-- serializers.cpython-311.pyc
-            |-- views.cpython-311.pyc
         |-- admin.py
         |-- apps.py
         |-- migrations
@@ -23,11 +16,6 @@
         |-- views.py
     |-- FinanceTrackerApi
         |-- __init__.py
-        |-- __pycache__
-            |-- __init__.cpython-311.pyc
-            |-- settings.cpython-311.pyc
-            |-- urls.cpython-311.pyc
-            |-- wsgi.cpython-311.pyc
         |-- asgi.py
         |-- settings.py
         |-- urls.py
@@ -39,6 +27,7 @@
             |-- README.md
             |-- package-lock.json
             |-- package.json
+            |-- postcss.config.js
             |-- public
                 |-- favicon.ico
                 |-- index.html
@@ -73,6 +62,7 @@
                     |-- ReportPage.js
                 |-- reportWebVitals.js
                 |-- setupTests.js
+            |-- tailwind.config.js
     |-- manage.py
     |-- requirements.txt
     |-- templates
