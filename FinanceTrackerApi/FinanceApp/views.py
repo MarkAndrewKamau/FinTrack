@@ -38,7 +38,7 @@ class ExpenseViewSet(viewsets.ModelViewSet):
     serializer.save(user=self.request.user)
 
   def create(self, request, *args, **kwargs):
-    if request.data.get('amount') and float(request.data.get('amount')) <= 0:
+    if request.data.get('amount') <= 0: 
       return Response({'error': 'Amount should be greater than zero'}, status=status.HTTP_400_BAD_REQUEST)
     return super().create(request, *args, **kwargs)
   
