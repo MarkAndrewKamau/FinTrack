@@ -3,7 +3,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .serializers import ExpenseSerializer, IncomeSerializer, BudgetSerializer, FinancialReportSerializer, RegisterSerializer, UserSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Expense, Income, Budget, FinancialReport
+from .models import Expense, Income, Budget, FinancialReport, Profile
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import permissions
@@ -102,4 +102,10 @@ class FinancialReportAPIView(APIView):
 
     serializer = FinancialReportSerializer(report)
     return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+
+class ProfileViewSet(viewsets.ModelViewSet):
+  queryset = Profile.objects.all()
+  serializer_class = ProfileSerializer
+  permission_classes = [IsAuthenticated]
+
   

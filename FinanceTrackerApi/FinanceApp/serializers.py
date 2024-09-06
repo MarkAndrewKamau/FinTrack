@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Expense, Income, Budget, FinancialReport
+from .models import Expense, Income, Budget, FinancialReport, Profile
 from django.contrib.auth.models import User
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -36,4 +36,9 @@ class BudgetSerializer(serializers.ModelSerializer):
 class FinancialReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = FinancialReport
+        fields = '__all__'
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
         fields = '__all__'
