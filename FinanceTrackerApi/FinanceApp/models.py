@@ -1,5 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.models.signals import post_save
+from django.dispatch import receiver
+from
 
 class Expense(models.Model):
     """Model for Expense Tracking"""
@@ -69,3 +72,25 @@ class FinancialReport(models.Model):
         self.budget_status = total_income - total_expenses
 
         self.save()
+
+class Profile(models.Model):
+    """Model for the profile"""
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.Textfield(max_length=350, blank=True)
+    location = models.CharField(max_length=50, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        """String representation for the profile"""
+        return f"{self.user.username}'s Profile"
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    """Creates the user's profile"""
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    """Saves the user's profile"""
+    instance.profile.save()
