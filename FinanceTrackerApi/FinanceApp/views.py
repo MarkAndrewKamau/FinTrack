@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from .serializers import ExpenseSerializer, IncomeSerializer, BudgetSerializer, FinancialReportSerializer, RegisterSerializer, UserSerializer
+from .serializers import ExpenseSerializer, IncomeSerializer, BudgetSerializer, FinancialReportSerializer, RegisterSerializer, UserSerializer, ProfileSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from .models import Expense, Income, Budget, FinancialReport, Profile
 from rest_framework.views import APIView
@@ -108,4 +108,3 @@ class ProfileViewSet(viewsets.ModelViewSet):
   serializer_class = ProfileSerializer
   permission_classes = [IsAuthenticated]
 
-  
