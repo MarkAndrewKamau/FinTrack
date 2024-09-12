@@ -25,13 +25,30 @@ class ExpenseSerializer(serializers.ModelSerializer):
 class IncomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Income
-        fields = '__all__'
+        fields = ['user', 'id', 'amount', 'source', 'date']
 
-class BudgetSerializer(serializers.ModelSerializer):    
+    def create(self, validated_data):
+        # Remove 'user' from validated_data if it's there
+        validated_data.pop('user', None)
+
+        # Assign the authenticated user manually
+        user = self.context['request'].user
+        
+        # Create and return the Income object
+        return Income.objects.create(user=user, **validated_data)
+    
+    def update(self, instance, validated_data):
+        # Update specific fields
+        instance.amount = validated_data.get('amount', instance.amount)
+        instance.source = validated_data.get('source', instance.source)
+        instance.date = validated_data.get('date', instance.date)
+        instance.save()
+        return instance
+
+class BudgetSerializer(serializers.ModelSerializer):  
     class Meta:
         model = Budget
         fields = '__all__'
-
 
 class FinancialReportSerializer(serializers.ModelSerializer):
     class Meta:
