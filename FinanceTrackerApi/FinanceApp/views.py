@@ -48,17 +48,12 @@ class IncomeViewSet(viewsets.ModelViewSet):
   serializer_class = IncomeSerializer
   permission_classes = [IsAuthenticated]
 
-  def get_queryset(self):
-    return Income.objects.filter(user=self.request.user)
-  
-  def perform_create(self, serializer):
-    serializer.save(user=self.request.user)
+  def get_serializer_context(self):
+      """Add user to the serializer context"""
+      context = super().get_serializer_context()
+      context.update({'request': self.request})
+      return context
 
-  def create(self, request, *args, **kwargs):
-    if request.data.get('amount') and float(request.data.get('amount')) <= 0:
-      return Response({'error': 'Amount should be greater than zero'}, status=status.HTTP_400_BAD_REQUEST)
-    return super().create(request, *args, **kwargs)
-  
 
 class BudgetViewSet(viewsets.ModelViewSet):
   queryset = Budget.objects.all()
