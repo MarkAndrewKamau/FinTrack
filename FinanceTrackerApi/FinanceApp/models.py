@@ -47,10 +47,10 @@ class Budget(models.Model):
 class FinancialReport(models.Model):
     """Model for the Financial Report Generation"""
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    total_income = models.DecimalField(max_digits=15, decimal_places=2)
-    total_expenses = models.DecimalField(max_digits=15, decimal_places=2)
-    budget_status = models.DecimalField(max_digits=15, decimal_places=2, help_text="Budget surplus/deficit")
-    report_date = models.DateField()
+    total_income = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+    total_expenses = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
+    budget_status = models.DecimalField(max_digits=15, decimal_places=2, default=0.00, help_text="Budget surplus/deficit")
+    report_date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         """String representation for the Financial Report"""
