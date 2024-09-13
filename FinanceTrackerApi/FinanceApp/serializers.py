@@ -55,7 +55,18 @@ class FinancialReportSerializer(serializers.ModelSerializer):
         model = FinancialReport
         fields = '__all__'
 
+    def create(self, validated_data):
+        # Create FinancialReport object without saving it
+        report = FinancialReport(**validated_data)
+
+        # Call calculate_report method to calculate the report
+        report.calculate_report()
+
+        # Save and Return the report
+        report.save()
+        return report
+
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = '__all__'
+        fields = ['user', 'id', 'bio', 'location', 'birth_date']
