@@ -7,6 +7,9 @@ from .models import Expense, Income, Budget, FinancialReport, Profile
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import permissions
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from django.core.cache import cache
 
 # Create your views here.
 
@@ -83,6 +86,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
 class FinancialReportAPIView(APIView):
   permission_classes = [IsAuthenticated]
 
+  @method_decorator(cache_page(60*75, key_prefix=lambda view: view.request.user.id))
   def get(self, request, *args, **kwargs):
     reports = FinancialReport.objects.filter(user=request.user)
     if not reports.exists():
