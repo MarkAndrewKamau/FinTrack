@@ -71,6 +71,8 @@
                     |-- Modal.js
                     |-- ProfilePage.js
                     |-- ReportPage.js
+                    |-- Signin.css
+                    |-- Signin.js
                     |-- Signup.css
                     |-- Signup.js
                 |-- reportWebVitals.js
