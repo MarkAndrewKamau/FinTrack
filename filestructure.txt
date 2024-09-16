@@ -2,10 +2,16 @@
 |-- FinanceTrackerApi
     |-- FinanceApp
         |-- __init__.py
+        |-- __pycache__
+            |-- __init__.cpython-311.pyc
+            |-- apps.cpython-311.pyc
         |-- admin.py
         |-- apps.py
+        |-- forms.py
         |-- migrations
             |-- 0001_initial.py
+            |-- 0002_profile.py
+            |-- 0003_alter_financialreport_budget_status_and_more.py
             |-- __init__.py
             |-- __pycache__
                 |-- 0001_initial.cpython-311.pyc
@@ -16,6 +22,10 @@
         |-- views.py
     |-- FinanceTrackerApi
         |-- __init__.py
+        |-- __pycache__
+            |-- __init__.cpython-311.pyc
+            |-- settings.cpython-311.pyc
+            |-- urls.cpython-311.pyc
         |-- asgi.py
         |-- settings.py
         |-- urls.py
@@ -60,6 +70,7 @@
                     |-- IncomePage.js
                     |-- ProfilePage.js
                     |-- ReportPage.js
+                    |-- Signup.js
                 |-- reportWebVitals.js
                 |-- setupTests.js
             |-- tailwind.config.js
