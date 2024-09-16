@@ -68,8 +68,10 @@
                     |-- ExpensesPage.js
                     |-- Homepage.js
                     |-- IncomePage.js
+                    |-- Modal.js
                     |-- ProfilePage.js
                     |-- ReportPage.js
+                    |-- Signup.css
                     |-- Signup.js
                 |-- reportWebVitals.js
                 |-- setupTests.js
