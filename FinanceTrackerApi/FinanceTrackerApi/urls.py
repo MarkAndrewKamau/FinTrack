@@ -33,7 +33,7 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('financial-report/', FinancialReportAPIView.as_view(), name='financial_report'),
     path('register/', RegistrationView.as_view(), name='register'),
-    path('', include(router.urls)),
+    path('api/', include(router.urls)),
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/social/', include('allauth.socialaccount.urls')),
