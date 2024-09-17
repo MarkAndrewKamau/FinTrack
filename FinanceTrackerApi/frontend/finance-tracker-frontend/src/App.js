@@ -9,7 +9,6 @@ import BudgetPage from './pages/BudgetPage';
 import ReportPage from './pages/ReportPage';
 import ProfilePage from './pages/ProfilePage';
 import Signup from './pages/Signup';
-import Signin from './pages/Signin';
 
 function App() {
   return (
@@ -17,14 +16,13 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<Signup />} /> {/* Set Signup as default route */}
           <Route path="/expenses" element={<ExpensesPage />} />
           <Route path="/income" element={<IncomePage />} />
           <Route path="/budget" element={<BudgetPage />} />
           <Route path="/report" element={<ReportPage />} />
           <Route path="/profile" element={<ProfilePage />} />
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
+          <Route path="/home" element={<HomePage />} /> {/* Add HomePage as /home route */}
         </Routes>
       </main>
       <Footer />

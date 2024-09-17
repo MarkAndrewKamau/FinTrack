@@ -76,6 +76,8 @@
                     |-- Signup.css
                     |-- Signup.js
                 |-- reportWebVitals.js
+                |-- services
+                    |-- authService.js
                 |-- setupTests.js
             |-- tailwind.config.js
     |-- manage.py
