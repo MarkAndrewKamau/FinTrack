@@ -60,18 +60,20 @@
                     |-- Header.js
                     |-- IncomeForm.js
                     |-- IncomeList.js
-                    |-- ProfilePage.js
-                    |-- ReportPage.js
                 |-- index.css
                 |-- index.js
                 |-- logo.svg
                 |-- pages
                     |-- BudgetPage.js
+                    |-- Dashboard.css
+                    |-- Dashboard.js
                     |-- ExpensesPage.js
                     |-- Homepage.js
                     |-- IncomePage.js
                     |-- Modal.js
+                    |-- ProfilePage.css
                     |-- ProfilePage.js
+                    |-- ReportPage.css
                     |-- ReportPage.js
                     |-- Signin.css
                     |-- Signin.js
