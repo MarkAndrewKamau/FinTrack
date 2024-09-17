@@ -6,7 +6,7 @@ const API_URL = 'http://localhost:8000/api'; // Update this to match your backen
 // Function to handle user signup
 export const signup = async (email, password) => {
   try {
-    const response = await axios.post(`${API_URL}/signup`, { email, password });
+    const response = await axios.post(`${API_URL}/register/`, { email, password });
     return response.data;
   } catch (error) {
     console.error('Signup error:', error);
@@ -17,7 +17,7 @@ export const signup = async (email, password) => {
 // Function to handle user signin
 export const signin = async (email, password) => {
   try {
-    const response = await axios.post(`${API_URL}/signin`, { email, password });
+    const response = await axios.post(`${API_URL}/token/`, { email, password });
     return response.data;
   } catch (error) {
     console.error('Signin error:', error);

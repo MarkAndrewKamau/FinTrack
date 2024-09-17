@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebookF, FaApple, FaEthereum } from 'react-icons/fa';
 import './Signup.css';
+import { signup } from '../services/authService'; // Import the signup function
+import { useNavigate } from 'react-router-dom'; // Import useNavigate to redirect users
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -8,6 +10,9 @@ const Signup = () => {
     email: '',
     password: ''
   });
+
+  const [errorMessage, setErrorMessage] = useState(''); // State to handle error messages
+  const navigate = useNavigate(); // Initialize useNavigate for redirecting
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -17,15 +22,34 @@ const Signup = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle signup logic here
+    try {
+      // Call the signup function from authServices.js
+      const response = await signup(formData.name, formData.email, formData.password);
+      console.log('Signup successful:', response);
+  
+      // Save JWT token to localStorage if applicable
+      if (response && response.access) {
+        localStorage.setItem('token', response.access); // Save JWT token
+      }
+  
+      // Redirect the user to the signin page or dashboard
+      navigate('/signin'); // Redirect to signin page or another page
+  
+    } catch (error) {
+      console.error('Signup failed:', error);
+      setErrorMessage('Signup failed. Please try again.'); // Show error message to the user
+    }
   };
 
   return (
     <div className="signup-container">
       <form className="signup-form" onSubmit={handleSubmit}>
         <h2>Sign Up</h2>
+        
+        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input
