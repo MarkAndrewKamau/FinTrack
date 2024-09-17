@@ -29,19 +29,30 @@ const Signup = () => {
       const response = await signup(formData.username, formData.email, formData.password);
       console.log('Signup successful:', response);
   
-      // Save JWT token to localStorage if applicable
+      // Save JWT token to localStorage
       if (response && response.access) {
         localStorage.setItem('token', response.access); // Save JWT token
       }
   
-      // Redirect the user to the signin page or dashboard
-      navigate('/signin'); // Redirect to signin page or another page
+      // Redirect the user to the signin page
+      navigate('/signin');
   
     } catch (error) {
-      console.error('Signup failed:', error);
-      setErrorMessage('Signup failed. Please try again.'); // Show error message to the user
+      // Check if the error has a response with validation messages
+      if (error.response && error.response.data) {
+        const errorData = error.response.data;
+        if (errorData.username) {
+          setErrorMessage(`Username: ${errorData.username}`);
+        } else if (errorData.email) {
+          setErrorMessage(`Email: ${errorData.email}`);
+        } else {
+          setErrorMessage('Signup failed. Please try again.');
+        }
+      } else {
+        setErrorMessage('Signup failed. Please try again.');
+      }
     }
-  };
+  };  
 
   return (
     <div className="signup-container">

@@ -3,14 +3,36 @@ from .models import Expense, Income, Budget, FinancialReport, Profile
 from django.contrib.auth.models import User
 
 class RegisterSerializer(serializers.ModelSerializer):
-  class Meta:
-    model = User
-    fields = ['id', 'username', 'email', 'password']
-    extra_kwargs = {'password': {'write_only': True}}
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'password']
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
-  def create(self, validated_data):
-    user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
-    return user
+    # Override validate method
+    def validate(self, data):
+        username = data.get('username')
+        email = data.get('email')
+
+        # Check if the username already exists
+        if User.objects.filter(username=username).exists():
+            raise serializers.ValidationError({'username': 'A user with this username already exists.'})
+
+        # Check if the email already exists
+        if User.objects.filter(email=email).exists():
+            raise serializers.ValidationError({'email': 'A user with this email already exists.'})
+
+        return data
+
+    def create(self, validated_data):
+        # Create the user with the validated data
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data['email'],
+            password=validated_data['password']
+        )
+        return user
   
 class UserSerializer(serializers.ModelSerializer):
   class Meta:

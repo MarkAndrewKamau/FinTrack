@@ -34,7 +34,7 @@ const Signin = () => {
       navigate('/profile');
     } catch (error) {
       console.error('Signin failed:', error);
-      setErrorMessage('Signin failed. Please check your credentials.');
+      setErrorMessage('Signin failed. Invalid username or password.'); // Show error message to the user
     }
   };
 
