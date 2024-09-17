@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom'; // Import useNavigate to redirec
 
 const Signup = () => {
   const [formData, setFormData] = useState({
-    name: '',
+    username: '',
     email: '',
     password: ''
   });
@@ -26,7 +26,7 @@ const Signup = () => {
     e.preventDefault();
     try {
       // Call the signup function from authServices.js
-      const response = await signup(formData.name, formData.email, formData.password);
+      const response = await signup(formData.username, formData.email, formData.password);
       console.log('Signup successful:', response);
   
       // Save JWT token to localStorage if applicable
@@ -51,12 +51,12 @@ const Signup = () => {
         {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
 
         <div className="form-group">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="username">Username</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
+            id="username"
+            name="username"
+            value={formData.username}
             onChange={handleChange}
             required
           />
