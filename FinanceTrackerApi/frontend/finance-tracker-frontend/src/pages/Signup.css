@@ -1,137 +1,130 @@
-/* Signup.css */
 .signup-page {
     display: flex;
-    flex-direction: column;
+    justify-content: center;
     align-items: center;
-    padding: 40px;
-    background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
-    min-height: 100vh;
-    transition: background 0.5s ease;
-}
-
-.signup-page:hover {
-    background: linear-gradient(135deg, #e5e7eb, #f3f4f6);
-}
-
-.signup-form {
-    background: white;
-    border-radius: 8px;
+    height: 100vh;
+    background: linear-gradient(135deg, #ece9e6, #ffffff);
+  }
+  
+  .signup-form {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
     max-width: 400px;
     width: 100%;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.signup-form:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.form-group {
-    margin-bottom: 20px;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-    color: #333;
-    transition: color 0.3s ease;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-    font-size: 16px;
-    color: #333;
-    transition: border-color 0.3s ease;
-}
-
-.form-group input:focus {
-    border-color: #007bff;
-    outline: none;
-}
-
-.signup-button {
-    padding: 12px 24px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    color: white;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.signup-button:hover {
-    transform: scale(1.05);
-}
-
-.signup-button.apple {
-    background-color: #000;
-}
-
-.signup-button.apple:hover {
-    background-color: #333;
-}
-
-.signup-button.google {
-    background-color: #db4437;
-}
-
-.signup-button.google:hover {
-    background-color: #c1351d;
-}
-
-.signup-button.facebook {
-    background-color: #3b5998;
-}
-
-.signup-button.facebook:hover {
-    background-color: #2d4373;
-}
-
-.signup-button.metamask {
-    background-color: #f6851b;
-}
-
-.signup-button.metamask:hover {
-    background-color: #e27300;
-}
-
-.signup-options {
-    margin-top: 30px;
     text-align: center;
-}
-
-.signup-options p {
-    margin-bottom: 10px;
-    font-size: 16px;
-    color: #555;
-}
-
-.signup-buttons {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-}
-
-.signup-buttons button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 14px;
-    padding: 10px 15px;
-    border-radius: 6px;
+  }
+  
+  .signup-form h2 {
+    margin-bottom: 1rem;
+    color: #333;
+  }
+  
+  .form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #333;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: border-color 0.3s;
+  }
+  
+  .form-group input:focus {
+    border-color: #333;
+  }
+  
+  .signup-button {
+    width: 100%;
+    padding: 0.75rem;
+    background: #333;
+    color: #fff;
     border: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.signup-buttons button:hover {
-    transform: scale(1.05);
-}
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .signup-button:hover {
+    background: #555;
+  }
+  
+  .social-signup {
+    margin-top: 1rem;
+  }
+  
+  .social-signup button {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+  }
+  
+  .google-signup {
+    background: #db4437;
+    color: #fff;
+  }
+  
+  .google-signup:hover {
+    background: #c23321;
+  }
+  
+  .apple-signup {
+    background: #000;
+    color: #fff;
+  }
+  
+  .apple-signup:hover {
+    background: #333;
+  }
+  
+  .facebook-signup {
+    background: #3b5998;
+    color: #fff;
+  }
+  
+  .facebook-signup:hover {
+    background: #2d4373;
+  }
+  
+  .metamask-signup {
+    background: #f6851b;
+    color: #fff;
+  }
+  
+  .metamask-signup:hover {
+    background: #e27400;
+  }
+  
+  .signup-options {
+    margin-top: 1rem;
+  }
+  
+  .signup-options p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .link-to-signin {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+  }
+  
+  .link-to-signin:hover {
+    color: #555;
+  }
+  

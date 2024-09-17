@@ -1,15 +1,37 @@
 import React, { useState } from 'react';
+import { signup } from '../services/authService'; // Import the signup function
 import './Signup.css'; // Import the CSS file for styling
-import { FaApple, FaGoogle, FaFacebook, FaEthereum } from 'react-icons/fa';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignup = (e) => {
+  const handleSignup = async (e) => {
     e.preventDefault();
-    // Add your signup logic here
-    console.log('Signup:', { email, password });
+    try {
+      const result = await signup(email, password);
+      console.log('Signup successful:', result);
+      // Redirect or show a success message
+    } catch (error) {
+      console.error('Signup failed:', error);
+      // Show an error message
+    }
+  };
+
+  const handleGoogleSignup = () => {
+    // Handle Google signup logic here
+  };
+
+  const handleAppleSignup = () => {
+    // Handle Apple signup logic here
+  };
+
+  const handleFacebookSignup = () => {
+    // Handle Facebook signup logic here
+  };
+
+  const handleMetaMaskSignup = () => {
+    // Handle MetaMask signup logic here
   };
 
   return (
@@ -39,15 +61,15 @@ const Signup = () => {
           </div>
           <button type="submit" className="signup-button">Sign Up</button>
         </form>
+        <div className="social-signup">
+          <button onClick={handleGoogleSignup} className="google-signup">Sign Up with Google</button>
+          <button onClick={handleAppleSignup} className="apple-signup">Sign Up with Apple</button>
+          <button onClick={handleFacebookSignup} className="facebook-signup">Sign Up with Facebook</button>
+          <button onClick={handleMetaMaskSignup} className="metamask-signup">Sign Up with MetaMask</button>
+        </div>
         <div className="signup-options">
           <p>Already have an account?</p>
           <a href="/signin" className="link-to-signin">Sign in</a>
-        </div>
-        <div className="signup-buttons">
-          <button className="signup-button apple"><FaApple /> Sign up with Apple</button>
-          <button className="signup-button google"><FaGoogle /> Sign up with Google</button>
-          <button className="signup-button facebook"><FaFacebook /> Sign up with Facebook</button>
-          <button className="signup-button metamask"><FaEthereum /> Sign up with MetaMask</button>
         </div>
       </div>
     </div>
