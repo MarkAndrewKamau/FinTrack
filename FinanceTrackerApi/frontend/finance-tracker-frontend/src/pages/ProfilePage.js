@@ -8,7 +8,7 @@ function ProfilePage() {
     // Fetch user profile from API
     // This is a placeholder. Replace with actual API call.
     const fetchProfile = async () => {
-      const response = await fetch('/api/user-profile');
+      const response = await fetch('/api/profiles');
       const data = await response.json();
       setProfile(data);
     };

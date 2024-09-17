@@ -8,7 +8,7 @@ function FinancialReport() {
     // Fetch financial report from API
     // This is a placeholder. Replace with actual API call.
     const fetchReport = async () => {
-      const response = await fetch('/api/financial-report');
+      const response = await fetch('/financial-report');
       const data = await response.json();
       setReport(data);
     };
