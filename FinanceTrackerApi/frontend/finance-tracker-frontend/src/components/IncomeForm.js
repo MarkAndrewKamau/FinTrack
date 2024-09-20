@@ -78,7 +78,7 @@ function IncomeForm({ onSubmit }) {
           onChange={(newDate) => setDate(newDate)}
           dateFormat="yyyy-MM-dd" // Force the format to YYYY-MM-DD
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-          placeholderText="YYYY-MM-DD" // Display a placeholder in the format you want
+          placeholderText="YYYY-MM-DD" // Display a placeholder
         />
       </div>
       <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">

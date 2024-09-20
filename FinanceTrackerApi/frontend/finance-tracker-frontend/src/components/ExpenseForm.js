@@ -6,13 +6,37 @@ function ExpenseForm({ onSubmit }) {
   const [date, setDate] = useState('');
   const [category, setCategory] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSubmit({ amount, description, date, category });
-    setAmount('');
-    setDescription('');
-    setDate('');
-    setCategory('');
+    
+    const expenseData = { amount, description, date, category };
+
+    // Fetch token from localStorage (assuming JWT auth)
+    const token = localStorage.getItem('token');
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/expenses/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`, // Attach token for authenticated requests
+        },
+        body: JSON.stringify(expenseData),
+      });
+
+      if (response.ok) {
+        const newExpense = await response.json();
+        onSubmit(newExpense); // Pass the new expense back to the parent
+        setAmount('');
+        setDescription('');
+        setDate('');
+        setCategory('');
+      } else {
+        console.error('Error creating expense:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
   };
 
   return (

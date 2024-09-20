@@ -44,6 +44,10 @@ class ExpenseSerializer(serializers.ModelSerializer):
         model = Expense
         fields = '__all__'
 
+        extra_kwargs = {
+            'user': {'read_only': True}  # Ensure 'user' is read-only and auto-assigned
+        }
+
 class IncomeSerializer(serializers.ModelSerializer):
     class Meta:
         model = Income

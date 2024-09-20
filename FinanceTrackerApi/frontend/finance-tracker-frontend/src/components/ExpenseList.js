@@ -7,11 +7,26 @@ function ExpenseList() {
 
   useEffect(() => {
     // Fetch expenses from API
-    // This is a placeholder. Replace with actual API call.
     const fetchExpenses = async () => {
-      const response = await fetch('/api/expenses');
-      const data = await response.json();
-      setExpenses(data);
+      const token = localStorage.getItem('token'); // Retrieve the token from local storage
+      try {
+        const response = await fetch('/api/expenses', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`, // Set the token in the Authorization header
+          },
+        });
+        
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        
+        const data = await response.json();
+        setExpenses(data);
+      } catch (error) {
+        console.error('Failed to fetch expenses:', error);
+      }
     };
 
     fetchExpenses();
