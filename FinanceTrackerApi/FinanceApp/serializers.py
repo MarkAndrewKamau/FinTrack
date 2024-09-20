@@ -17,11 +17,11 @@ class RegisterSerializer(serializers.ModelSerializer):
 
         # Check if the username already exists
         if User.objects.filter(username=username).exists():
-            raise serializers.ValidationError({'username': 'A user with this username already exists.'})
+            raise serializers.ValidationError({'A user with this username already exists.'})
 
         # Check if the email already exists
         if User.objects.filter(email=email).exists():
-            raise serializers.ValidationError({'email': 'A user with this email already exists.'})
+            raise serializers.ValidationError({'A user with this email already exists.'})
 
         return data
 
@@ -66,6 +66,7 @@ class IncomeSerializer(serializers.ModelSerializer):
         instance.date = validated_data.get('date', instance.date)
         instance.save()
         return instance
+    
 
 class BudgetSerializer(serializers.ModelSerializer):  
     class Meta:

@@ -1,124 +1,170 @@
 import React, { useState, useEffect } from 'react';
-import './ProfilePage.css';
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+  const [newProfile, setNewProfile] = useState({
+    bio: '',
+    location: '',
+    birth_date: '',
+  });
 
+  // Fetch profile on component mount
   useEffect(() => {
-    // Fetch user profile from API
-    // This is a placeholder. Replace with actual API call.
     const fetchProfile = async () => {
-      const response = await fetch('/api/profiles');
-      const data = await response.json();
-      setProfile(data);
+      const token = localStorage.getItem('token'); // Retrieve JWT token from local storage
+
+      try {
+        const response = await fetch('http://127.0.0.1:8000/api/profiles/', {
+          headers: {
+            'Authorization': `Bearer ${token}`, // Include token in request headers
+          },
+        });
+
+        if (!response.ok) {
+          throw new Error('Unable to fetch profile');
+        }
+
+        const data = await response.json();
+        setProfile(data.length ? data[0] : null); // Check if profile exists
+      } catch (error) {
+        setErrorMessage('Error fetching profile. Please try again.');
+      }
     };
 
     fetchProfile();
   }, []);
 
+  // Handle form input changes for new profile
   const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setProfile(prevProfile => ({
-      ...prevProfile,
-      [name]: value
-    }));
+    setNewProfile({
+      ...newProfile,
+      [name]: value,
+    });
   };
 
-  const handleSubmit = (e) => {
+  // Handle form submission for profile creation
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Send updated profile to API
-    console.log('Updated profile:', profile);
-    // You would typically send this to your API
-    setIsEditing(false);
+    const token = localStorage.getItem('token'); // Retrieve JWT token
+
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/profiles/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`, // Include token in headers
+        },
+        body: JSON.stringify(newProfile),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setProfile(data); // Set the profile once created
+        setIsEditing(false); // Stop editing mode
+      } else {
+        setErrorMessage('Error creating profile.');
+      }
+    } catch (error) {
+      setErrorMessage('Error creating profile.');
+    }
   };
 
-  if (!profile) return <div>Loading...</div>;
+  if (errorMessage) {
+    return <div>{errorMessage}</div>;
+  }
 
-  return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-8">User Profile</h1>
-      <div className="bg-white p-6 rounded shadow">
+  if (!profile) {
+    // If no profile exists, show a form to create one
+    return (
+      <div>
+        <h2>No profile found</h2>
         {isEditing ? (
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
+              <label htmlFor="bio">Bio</label>
               <input
                 type="text"
-                id="name"
-                name="name"
-                value={profile.name}
+                id="bio"
+                name="bio"
+                value={newProfile.bio}
                 onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
             </div>
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
+              <label htmlFor="location">Location</label>
               <input
-                type="email"
-                id="email"
-                name="email"
-                value={profile.email}
+                type="text"
+                id="location"
+                name="location"
+                value={newProfile.location}
                 onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
               />
             </div>
             <div>
-              <label htmlFor="currency" className="block text-sm font-medium text-gray-700">Preferred Currency</label>
-              <select
-                id="currency"
-                name="currency"
-                value={profile.currency}
+              <label htmlFor="birth_date">Birth Date</label>
+              <input
+                type="date"
+                id="birth_date"
+                name="birth_date"
+                value={newProfile.birth_date}
                 onChange={handleInputChange}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-              >
-                <option value="USD">USD</option>
-                <option value="EUR">EUR</option>
-                <option value="GBP">GBP</option>
-                <option value="JPY">JPY</option>
-              </select>
+              />
             </div>
-            <div className="flex justify-end space-x-4">
-              <button
-                type="button"
-                onClick={() => setIsEditing(false)}
-                className="px-4 py-2 border border-gray-300 rounded-md text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Save Changes
-              </button>
-            </div>
+            <button type="submit">Save Profile</button>
           </form>
         ) : (
-          <div className="space-y-4">
-            <div>
-              <h2 className="text-sm font-medium text-gray-500">Name</h2>
-              <p className="mt-1 text-sm text-gray-900">{profile.name}</p>
-            </div>
-            <div>
-              <h2 className="text-sm font-medium text-gray-500">Email</h2>
-              <p className="mt-1 text-sm text-gray-900">{profile.email}</p>
-            </div>
-            <div>
-              <h2 className="text-sm font-medium text-gray-500">Preferred Currency</h2>
-              <p className="mt-1 text-sm text-gray-900">{profile.currency}</p>
-            </div>
-            <div className="flex justify-end">
-              <button
-                onClick={() => setIsEditing(true)}
-                className="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              >
-                Edit Profile
-              </button>
-            </div>
-          </div>
+          <button onClick={() => setIsEditing(true)}>Create Profile</button>
         )}
       </div>
+    );
+  }
+
+  return (
+    <div className="container">
+      <h2>Profile Details</h2>
+      <p><strong>Bio:</strong> {profile.bio}</p>
+      <p><strong>Location:</strong> {profile.location}</p>
+      <p><strong>Birth Date:</strong> {profile.birth_date}</p>
+      <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+
+      {isEditing && (
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label htmlFor="bio">Bio</label>
+            <input
+              type="text"
+              id="bio"
+              name="bio"
+              value={newProfile.bio}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="location">Location</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              value={newProfile.location}
+              onChange={handleInputChange}
+            />
+          </div>
+          <div>
+            <label htmlFor="birth_date">Birth Date</label>
+            <input
+              type="date"
+              id="birth_date"
+              name="birth_date"
+              value={newProfile.birth_date}
+              onChange={handleInputChange}
+            />
+          </div>
+          <button type="submit">Save Profile</button>
+        </form>
+      )}
     </div>
   );
 }
