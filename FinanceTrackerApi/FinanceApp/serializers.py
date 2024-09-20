@@ -49,11 +49,12 @@ class IncomeSerializer(serializers.ModelSerializer):
         model = Income
         fields = ['user', 'id', 'amount', 'source', 'date']
 
-    def create(self, validated_data):
-        # Remove 'user' from validated_data if it's there
-        validated_data.pop('user', None)
+        extra_kwargs = {
+            'user': {'read_only': True}  # Ensure 'user' is read-only and auto-assigned
+        }
 
-        # Assign the authenticated user manually
+    def create(self, validated_data):
+        # Assign the authenticated user manually from the request context
         user = self.context['request'].user
         
         # Create and return the Income object

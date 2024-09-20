@@ -1,21 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-function IncomeList() {
-  const [incomes, setIncomes] = useState([]);
+function IncomeList({ incomes }) {
   const [sortBy, setSortBy] = useState('date');
   const [filterSource, setFilterSource] = useState('');
-
-  useEffect(() => {
-    // Fetch incomes from API
-    // This is a placeholder. Replace with actual API call.
-    const fetchIncomes = async () => {
-      const response = await fetch('/api/incomes');
-      const data = await response.json();
-      setIncomes(data);
-    };
-
-    fetchIncomes();
-  }, []);
 
   const sortedIncomes = [...incomes].sort((a, b) => {
     if (sortBy === 'date') {
@@ -35,6 +22,7 @@ function IncomeList() {
 
   return (
     <div>
+      {/* Sort and Filter options */}
       <div className="flex justify-between mb-4">
         <div>
           <label htmlFor="sort" className="mr-2">Sort by:</label>
@@ -63,12 +51,16 @@ function IncomeList() {
           </select>
         </div>
       </div>
+
+      {/* List of Incomes */}
       <ul className="space-y-4">
         {filteredIncomes.map(income => (
           <li key={income.id} className="bg-white p-4 rounded shadow">
             <div className="flex justify-between">
               <span className="font-semibold">{income.source}</span>
-              <span className="text-green-600">${income.amount.toFixed(2)}</span>
+              <span className="text-green-600">
+              {typeof income.amount === 'number' ? `$${income.amount.toFixed(2)}` : `$${income.amount}`}
+              </span>
             </div>
             <div className="text-sm text-gray-500">
               <span>{new Date(income.date).toLocaleDateString()}</span>
