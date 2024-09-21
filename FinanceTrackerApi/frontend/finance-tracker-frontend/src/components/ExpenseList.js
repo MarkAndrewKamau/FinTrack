@@ -1,42 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-function ExpenseList() {
-  const [expenses, setExpenses] = useState([]);
+function ExpenseList({ expenses }) {
   const [sortBy, setSortBy] = useState('date');
   const [filterCategory, setFilterCategory] = useState('');
-
-  useEffect(() => {
-    // Fetch expenses from API
-    const fetchExpenses = async () => {
-      const token = localStorage.getItem('token'); // Retrieve the token from local storage
-      try {
-        const response = await fetch('/api/expenses', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`, // Set the token in the Authorization header
-          },
-        });
-        
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
-        const data = await response.json();
-        setExpenses(data);
-      } catch (error) {
-        console.error('Failed to fetch expenses:', error);
-      }
-    };
-
-    fetchExpenses();
-  }, []);
 
   const sortedExpenses = [...expenses].sort((a, b) => {
     if (sortBy === 'date') {
       return new Date(b.date) - new Date(a.date);
     } else if (sortBy === 'amount') {
-      return b.amount - a.amount;
+      return Number(b.amount) - Number(a.amount); // Ensure amount is a number
     }
     return 0;
   });
@@ -82,7 +54,9 @@ function ExpenseList() {
           <li key={expense.id} className="bg-white p-4 rounded shadow">
             <div className="flex justify-between">
               <span className="font-semibold">{expense.description}</span>
-              <span className="text-red-600">${expense.amount.toFixed(2)}</span>
+              <span className="text-red-600">
+                ${Number(expense.amount).toFixed(2)} {/* Ensure amount is a number */}
+              </span>
             </div>
             <div className="text-sm text-gray-500">
               <span>{new Date(expense.date).toLocaleDateString()}</span>

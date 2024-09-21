@@ -11,7 +11,6 @@ function ExpenseForm({ onSubmit }) {
     
     const expenseData = { amount, description, date, category };
 
-    // Fetch token from localStorage (assuming JWT auth)
     const token = localStorage.getItem('token');
 
     try {
@@ -19,18 +18,19 @@ function ExpenseForm({ onSubmit }) {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, // Attach token for authenticated requests
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(expenseData),
       });
 
       if (response.ok) {
-        const newExpense = await response.json();
-        onSubmit(newExpense); // Pass the new expense back to the parent
         setAmount('');
         setDescription('');
         setDate('');
         setCategory('');
+        
+        // Fetch updated list from the parent without directly passing the new expense
+        onSubmit();  // Call the function to refresh expenses without passing data
       } else {
         console.error('Error creating expense:', response.statusText);
       }

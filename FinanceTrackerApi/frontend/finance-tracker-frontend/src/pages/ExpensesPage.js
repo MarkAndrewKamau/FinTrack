@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import ExpenseList from '../components/ExpenseList';
 import ExpenseForm from '../components/ExpenseForm';
 
@@ -6,11 +6,7 @@ function ExpensesPage() {
   const [expenses, setExpenses] = useState([]);
   const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchExpenses();
-  }, []);
-
-  const fetchExpenses = async () => {
+  const fetchExpenses = useCallback(async () => {
     const response = await fetch('http://127.0.0.1:8000/api/expenses/', {
       headers: {
         'Authorization': `Bearer ${token}`, // Include the token
@@ -23,24 +19,14 @@ function ExpensesPage() {
     } else {
       console.error('Failed to fetch expenses:', await response.json());
     }
-  };
+  }, [token]); // Include token as a dependency
 
-  const handleExpenseSubmit = async (expense) => {
-    // Make the API call to create the expense
-    const response = await fetch('http://127.0.0.1:8000/api/expenses/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`,  // Ensure you include your token
-      },
-      body: JSON.stringify(expense),
-    });
+  useEffect(() => {
+    fetchExpenses();
+  }, [fetchExpenses]); // Include fetchExpenses in the dependency array
 
-    if (response.ok) {
-      await fetchExpenses(); // Call the function to fetch expenses again
-    } else {
-      console.error('Failed to add expense:', await response.json());
-    }
+  const handleExpenseSubmit = () => {
+    fetchExpenses(); // Fetch expenses again after a new expense is submitted
   };
 
   return (
