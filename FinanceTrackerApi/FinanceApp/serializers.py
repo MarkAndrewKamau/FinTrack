@@ -76,7 +76,11 @@ class IncomeSerializer(serializers.ModelSerializer):
 class BudgetSerializer(serializers.ModelSerializer):  
     class Meta:
         model = Budget
-        fields = '__all__'
+        fields = ['user', 'id', 'amount', 'category', 'start_date', 'end_date']
+
+        extra_kwargs = {
+            'user': {'read_only': True}  # Ensures 'user' is read-only and auto-assigned
+        }
 
 class FinancialReportSerializer(serializers.ModelSerializer):
     class Meta:

@@ -10,6 +10,7 @@ from rest_framework import permissions
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.core.cache import cache
+from datetime import datetime
 
 # Create your views here.
 
@@ -82,29 +83,43 @@ class IncomeViewSet(viewsets.ModelViewSet):
       return context
 
 
+from rest_framework import status
+from rest_framework.response import Response
+
 class BudgetViewSet(viewsets.ModelViewSet):
-  queryset = Budget.objects.all()
-  serializer_class = BudgetSerializer
-  permission_classes = [IsAuthenticated]
+    queryset = Budget.objects.all()
+    serializer_class = BudgetSerializer
+    permission_classes = [IsAuthenticated]
 
-  def get_queryset(self):
-    return Budget.objects.filter(user=self.request.user)
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.request.user)
   
-  def perform_create(self, serializer):
-    serializer.save(user=self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-  def create(self, request, *args, **kwargs):
-    start_date = request.data.get('start_date')
-    end_date = request.data.get('end_date')
-    amount = request.data.get('amount')
+    def create(self, request, *args, **kwargs):
+        start_date = request.data.get('start_date')
+        end_date = request.data.get('end_date')
+        amount = request.data.get('amount')
 
-    if start_date >= end_date:
-      return Response({'error': 'End date should be after start date'}, status=status.HTTP_400_BAD_REQUEST)
+        # Check if start_date or end_date are missing
+        if not start_date or not end_date:
+            return Response({'error': 'Start date and end date are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Convert start_date and end_date to datetime objects for comparison
+        try:
+            start_date = datetime.strptime(start_date, '%Y-%m-%d').date()
+            end_date = datetime.strptime(end_date, '%Y-%m-%d').date()
+        except ValueError:
+            return Response({'error': 'Invalid date format. Use YYYY-MM-DD'}, status=status.HTTP_400_BAD_REQUEST)
+
+        if start_date >= end_date:
+            return Response({'error': 'End date should be after start date'}, status=status.HTTP_400_BAD_REQUEST)
     
-    if float(amount) <= 0:
-      return Response({'error': 'Amount should be greater than zero'}, status=status.HTTP_400_BAD_REQUEST)
+        if float(amount) <= 0:
+            return Response({'error': 'Amount should be greater than zero'}, status=status.HTTP_400_BAD_REQUEST)
     
-    return super().create(request, *args, **kwargs)
+        return super().create(request, *args, **kwargs)
 
 
 class FinancialReportAPIView(APIView):
