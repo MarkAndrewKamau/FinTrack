@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BudgetList({ budgets }) {
+function BudgetList({ budgets, onDelete }) {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Your Budgets</h2>
@@ -15,6 +15,12 @@ function BudgetList({ budgets }) {
                 <p><strong>Amount:</strong> ${budget.amount}</p>
                 <p><strong>Start Date:</strong> {budget.start_date}</p>
                 <p><strong>End Date:</strong> {budget.end_date}</p>
+                <button 
+                  onClick={() => onDelete(budget.id)} 
+                  className="mt-2 text-red-600 hover:text-red-800"
+                >
+                  Delete
+                </button>
               </div>
             </li>
           ))}
