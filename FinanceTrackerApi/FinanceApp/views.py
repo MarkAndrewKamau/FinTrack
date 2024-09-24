@@ -7,10 +7,8 @@ from .models import Expense, Income, Budget, FinancialReport, Profile
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import permissions
-from django.utils.decorators import method_decorator
-from django.views.decorators.cache import cache_page
-from django.core.cache import cache
 from datetime import datetime
+from django.http import FileResponse, Http404
 
 # Create your views here.
 
@@ -122,24 +120,33 @@ class BudgetViewSet(viewsets.ModelViewSet):
         return super().create(request, *args, **kwargs)
 
 
-class FinancialReportAPIView(APIView):
-  permission_classes = [IsAuthenticated]
+class FinancialReportListCreateAPIView(APIView):
+    permission_classes = [IsAuthenticated]
 
-  @method_decorator(cache_page(60*75, key_prefix=lambda view: view.request.user.id))
-  def get(self, request, *args, **kwargs):
-    reports = FinancialReport.objects.filter(user=request.user)
-    if not reports.exists():
-      return Response({'detail': 'No report found'}, status=status.HTTP_404_NOT_FOUND)
-    
-    serializer = FinancialReportSerializer(reports, many=True)
-    return Response(serializer.data, status=status.HTTP_200_OK)
+    def get(self, request):
+        reports = FinancialReport.objects.all()
+        serializer = FinancialReportSerializer(reports, many=True)
+        return Response(serializer.data)
 
-  def post(self, request, *args, **kwargs):
-    report, created = FinancialReport.objects.get_or_create(user=request.user)
-    report.calculate_report()
+    def post(self, request):
+        user = request.user  # Get the currently authenticated user
+        report = FinancialReport(user=user)  # Create a new report instance for the user
+        report.calculate_report()  # Call the method to calculate totals
+        
+        # Save the report without a file if not uploading
+        report.save()  # This saves the report with calculated totals
 
-    serializer = FinancialReportSerializer(report)
-    return Response(serializer.data, status=status.HTTP_201_CREATED if created else status.HTTP_200_OK)
+        return Response(FinancialReportSerializer(report).data, status=status.HTTP_201_CREATED)
+
+class FinancialReportDetailAPIView(APIView):
+    def get(self, request, report_id):
+        try:
+            report = FinancialReport.objects.get(id=report_id)
+            file_path = report.file.path  # Assuming your model has a FileField for the report
+            response = FileResponse(open(file_path, 'rb'), as_attachment=True)
+            return response
+        except FinancialReport.DoesNotExist:
+            raise Http404("Report not found.")
 
 class ProfileViewSet(viewsets.ModelViewSet):
   queryset = Profile.objects.all()

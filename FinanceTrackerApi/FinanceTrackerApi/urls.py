@@ -18,7 +18,9 @@ from django.contrib import admin
 from django.urls import path, include 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from FinanceApp.views import ExpenseViewSet, IncomeViewSet, BudgetViewSet, FinancialReportAPIView, RegistrationView, UserViewSet, ProfileViewSet
+from FinanceApp.views import ExpenseViewSet, IncomeViewSet, BudgetViewSet, FinancialReportListCreateAPIView, FinancialReportDetailAPIView, RegistrationView, UserViewSet, ProfileViewSet
+from django.conf import settings
+from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register(r'users', UserViewSet, basename='user')
@@ -31,7 +33,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path('financial-report/', FinancialReportAPIView.as_view(), name='financial_report'),
+    path('financial-report/', FinancialReportListCreateAPIView.as_view(), name='financial_report-list'),
+    path('financial-report/<int:report_id>/', FinancialReportDetailAPIView.as_view(), name='financial-report-detail'),
     path('api/register/', RegistrationView.as_view(), name='register'),
     path('api/', include(router.urls)),
     path('api/auth/', include('dj_rest_auth.urls')),
@@ -39,3 +42,6 @@ urlpatterns = [
     path('api/auth/social/', include('allauth.socialaccount.urls')),
     path('accounts/', include('allauth.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

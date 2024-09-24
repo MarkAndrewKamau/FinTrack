@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from reportlab.pdfgen import canvas
+from django.core.files.base import ContentFile
+from io import BytesIO
 
 class Expense(models.Model):
     """Model for Expense Tracking"""
@@ -51,10 +54,29 @@ class FinancialReport(models.Model):
     total_expenses = models.DecimalField(max_digits=15, decimal_places=2, default=0.00)
     budget_status = models.DecimalField(max_digits=15, decimal_places=2, default=0.00, help_text="Budget surplus/deficit")
     report_date = models.DateField(auto_now_add=True)
+    file = models.FileField(upload_to='reports/')
 
     def __str__(self):
         """String representation for the Financial Report"""
         return f"{self.user.username} - {self.report_date} Financial Report"
+    
+    def generate_report_file(self):
+        """Generate a PDF report and save it to the file field."""
+        if self.file:
+            self.file.delete(save=False)
+
+        buffer = BytesIO()
+        p = canvas.Canvas(buffer)
+        p.drawString(100, 100, f"Financial Report for {self.user.username}")
+        p.drawString(100, 120, f"Total Income: {self.total_income}")
+        p.drawString(100, 140, f"Total Expenses: {self.total_expenses}")
+        p.drawString(100, 160, f"Budget Status: {self.budget_status}")
+        p.drawString(100, 180, f"Report Date: {self.report_date}")
+        p.showPage()
+        p.save()
+        buffer.seek(0)
+
+        self.file.save(f"financial_report_{self.report_date}.pdf", ContentFile(buffer.read()), save=True)
 
     def calculate_report(self):
         """Method to calculate the Financial Report"""
@@ -71,6 +93,7 @@ class FinancialReport(models.Model):
         self.budget_status = total_income - total_expenses
 
         self.save()
+        self.generate_report_file()
 
 class Profile(models.Model):
     """Model for the profile"""

@@ -85,7 +85,12 @@ class BudgetSerializer(serializers.ModelSerializer):
 class FinancialReportSerializer(serializers.ModelSerializer):
     class Meta:
         model = FinancialReport
-        fields = '__all__'
+        fields = ['user', 'id', 'total_income', 'total_expenses', 'budget_status', 'report_date', 'file']
+
+        extra_kwargs = {
+            'user': {'read_only': True},
+            'file': {'read_only': False}
+        }
 
     def create(self, validated_data):
         # Create FinancialReport object without saving it
