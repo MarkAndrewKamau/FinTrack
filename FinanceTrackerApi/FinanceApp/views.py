@@ -147,6 +147,14 @@ class FinancialReportDetailAPIView(APIView):
             return response
         except FinancialReport.DoesNotExist:
             raise Http404("Report not found.")
+      
+    def delete(self, request, report_id):
+        try:
+            report = FinancialReport.objects.get(id=report_id)
+            report.delete()  # Delete the report
+            return Response(status=status.HTTP_204_NO_CONTENT)  # Return no content status
+        except FinancialReport.DoesNotExist:
+            return Response({'detail': 'Report not found.'}, status=status.HTTP_404_NOT_FOUND)
 
 class ProfileViewSet(viewsets.ModelViewSet):
   queryset = Profile.objects.all()

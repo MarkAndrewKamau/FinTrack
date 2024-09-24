@@ -60,6 +60,33 @@ function ReportPage() {
     }
   };
 
+  // Function to delete a specific report (DELETE request)
+  const deleteReport = async (id) => {
+    setLoading(true);
+    try {
+      const token = localStorage.getItem('token'); // Get JWT token from local storage
+      const response = await fetch(`http://127.0.0.1:8000/financial-report/${id}/`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to delete report');
+      }
+
+      // Remove the deleted report from the state
+      setReportData((prevReports) => prevReports.filter(report => report.id !== id));
+    } catch (error) {
+      console.error('Error deleting report:', error);
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Fetch reports on component mount
   useEffect(() => {
     fetchReports();
@@ -88,9 +115,18 @@ function ReportPage() {
         {reportData.length > 0 ? (
           reportData.map((report) => (
             <div key={report.id} className="mb-6 border-b pb-4">
-              <h3 className="text-xl font-semibold">{report.title}</h3>
-              <p className="text-lg">{report.description}</p>
-              {/* Remove download link */}
+              <h3 className="text-xl font-semibold">Report ID: {report.id}</h3>
+              <p className="text-lg">Total Income: {report.total_income}</p>
+              <p className="text-lg">Total Expenses: {report.total_expenses}</p>
+              <p className="text-lg">Budget Status: {report.budget_status}</p>
+              <p className="text-lg">Report Date: {report.report_date}</p>
+              {/* Delete report button */}
+              <button 
+                onClick={() => deleteReport(report.id)} 
+                className="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-3 rounded mt-2"
+              >
+                Delete Report
+              </button>
             </div>
           ))
         ) : (
