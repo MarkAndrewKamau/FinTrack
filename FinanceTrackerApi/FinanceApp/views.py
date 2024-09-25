@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.response import Response
-from .serializers import ExpenseSerializer, IncomeSerializer, BudgetSerializer, FinancialReportSerializer, RegisterSerializer, UserSerializer, ProfileSerializer
+from .serializers import ExpenseSerializer, IncomeSerializer, BudgetSerializer, FinancialReportSerializer, RegisterSerializer, UserSerializer, ProfileSerializer, NotificationSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
-from .models import Expense, Income, Budget, FinancialReport, Profile
+from .models import Expense, Income, Budget, FinancialReport, Profile, Notification
 from rest_framework.views import APIView
 from django.contrib.auth.models import User
 from rest_framework import permissions
@@ -99,6 +99,7 @@ class BudgetViewSet(viewsets.ModelViewSet):
         start_date = request.data.get('start_date')
         end_date = request.data.get('end_date')
         amount = request.data.get('amount')
+        limit = request.data.get('limit')  # New field for budget limit
 
         # Check if start_date or end_date are missing
         if not start_date or not end_date:
@@ -116,8 +117,45 @@ class BudgetViewSet(viewsets.ModelViewSet):
     
         if float(amount) <= 0:
             return Response({'error': 'Amount should be greater than zero'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Check if the limit is provided and valid
+        if limit is None:
+            return Response({'error': 'Budget limit is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+        try:
+            limit = float(limit)
+            if limit <= 0:
+                return Response({'error': 'Budget limit should be greater than zero'}, status=status.HTTP_400_BAD_REQUEST)
+        except ValueError:
+            return Response({'error': 'Invalid limit format. Must be a number.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Call the super method to create the budget after validation
+        response = super().create(request, *args, **kwargs)
+
+        # Check the budget limit after creation
+        budget = Budget.objects.get(id=response.data['id'])  # Get the created budget
+        self.check_budget_limit(request.user, budget)  # Check if the budget exceeds the limit
+
+        return response
     
-        return super().create(request, *args, **kwargs)
+    def update_budget(self, request, budget_id):
+        budget = Budget.objects.get(id=budget_id, user=request.user)
+
+        # Update the budget with the new amount and other fields
+        budget.amount = request.data.get('amount', budget.amount)  # Ensure this is being passed in the request
+        budget.save()
+
+        # Check if the updated amount exceeds the budget limit
+        self.check_budget_limit(request.user, budget)
+
+        return Response({"status": "Budget updated successfully."}, status=status.HTTP_200_OK)
+    
+    def check_budget_limit(self, user, budget):
+        if budget.amount > budget.limit:  
+            Notification.objects.create(
+                user=user,
+                message=f"Budget limit reached for {budget.category}: ${budget.amount} exceeds ${budget.limit}.",
+            )
 
 
 class FinancialReportListCreateAPIView(APIView):
@@ -165,3 +203,13 @@ class ProfileViewSet(viewsets.ModelViewSet):
     # Return the user's profile if it exists, otherwise return an empty queryset
     return Profile.objects.filter(user=self.request.user)
 
+
+class NotificationListView(generics.ListAPIView):
+    """View to list user notifications."""
+    serializer_class = NotificationSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        """Return notifications for the authenticated user."""
+        return Notification.objects.filter(user=self.request.user).order_by('-created_at')
+    

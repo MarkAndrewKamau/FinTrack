@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Expense, Income, Budget, FinancialReport, Profile
+from .models import Expense, Income, Budget, FinancialReport, Profile, Notification
 from django.contrib.auth.models import User
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -76,7 +76,7 @@ class IncomeSerializer(serializers.ModelSerializer):
 class BudgetSerializer(serializers.ModelSerializer):  
     class Meta:
         model = Budget
-        fields = ['user', 'id', 'amount', 'category', 'start_date', 'end_date']
+        fields = ['user', 'id', 'amount', 'category', 'start_date', 'end_date', 'limit']
 
         extra_kwargs = {
             'user': {'read_only': True}  # Ensures 'user' is read-only and auto-assigned
@@ -107,3 +107,13 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
         fields = ['user', 'id', 'bio', 'location', 'birth_date']
+
+
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = ['user', 'id', 'message', 'created_at', 'is_read']
+
+        extra_kwargs = {
+            'user': {'read_only': True}  # Ensure 'user' is read-only and auto-assigned
+        }

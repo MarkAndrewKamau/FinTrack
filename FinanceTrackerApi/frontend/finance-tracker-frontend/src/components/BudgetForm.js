@@ -4,12 +4,31 @@ import "react-datepicker/dist/react-datepicker.css";
 
 function BudgetForm({ onSubmit }) {
   const [amount, setAmount] = useState('');
+  const [limit, setLimit] = useState(''); // Added limit state
   const [category, setCategory] = useState('');
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setError('');
+
+    // Validation
+    if (!amount || !limit || !category || !startDate || !endDate) {
+      setError('All fields are required.');
+      return;
+    }
+
+    if (parseFloat(amount) <= 0 || parseFloat(limit) <= 0) {
+      setError('Amount and limit must be greater than zero.');
+      return;
+    }
+
+    if (startDate >= endDate) {
+      setError('End date should be after start date.');
+      return;
+    }
 
     // Ensure dates are in YYYY-MM-DD format
     const formattedStartDate = startDate ? startDate.toISOString().split('T')[0] : '';
@@ -17,15 +36,17 @@ function BudgetForm({ onSubmit }) {
 
     const budgetData = { 
       amount: parseFloat(amount), // Ensure it's a number
+      limit: parseFloat(limit), // Ensure limit is a number
       category, 
-      start_date: formattedStartDate, // Use 'start_date' with underscores
-      end_date: formattedEndDate // Use 'end_date' with underscores
+      start_date: formattedStartDate,
+      end_date: formattedEndDate,
     };
 
     onSubmit(budgetData); // Pass the formatted data to the parent component
 
     // Reset form fields
     setAmount('');
+    setLimit('');
     setCategory('');
     setStartDate(null);
     setEndDate(null);
@@ -33,6 +54,7 @@ function BudgetForm({ onSubmit }) {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+      {error && <p className="text-red-500">{error}</p>} {/* Display error message */}
       <div>
         <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Budget Amount</label>
         <input
@@ -40,6 +62,17 @@ function BudgetForm({ onSubmit }) {
           id="amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
+          required
+          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        />
+      </div>
+      <div>
+        <label htmlFor="limit" className="block text-sm font-medium text-gray-700">Budget Limit</label> {/* Added limit label */}
+        <input
+          type="number"
+          id="limit"
+          value={limit}
+          onChange={(e) => setLimit(e.target.value)}
           required
           className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         />

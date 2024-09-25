@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path, include 
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from FinanceApp.views import ExpenseViewSet, IncomeViewSet, BudgetViewSet, FinancialReportListCreateAPIView, FinancialReportDetailAPIView, RegistrationView, UserViewSet, ProfileViewSet
+from FinanceApp.views import ExpenseViewSet, IncomeViewSet, BudgetViewSet, FinancialReportListCreateAPIView, FinancialReportDetailAPIView, RegistrationView, UserViewSet, ProfileViewSet, NotificationListView
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -41,6 +41,7 @@ urlpatterns = [
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/social/', include('allauth.socialaccount.urls')),
     path('accounts/', include('allauth.urls')),
+    path('api/notifications/', NotificationListView.as_view(), name='notification-list'),
 ]
 
 if settings.DEBUG:

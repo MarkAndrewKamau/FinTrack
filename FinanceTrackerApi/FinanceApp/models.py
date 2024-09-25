@@ -42,6 +42,7 @@ class Budget(models.Model):
     category = models.CharField(max_length=50, choices=category_choices)
     start_date = models.DateField()
     end_date = models.DateField()
+    limit = models.FloatField(default=0)
 
     def __str__(self):
         """String representation for the Budget"""
@@ -116,3 +117,15 @@ def create_user_profile(sender, instance, created, **kwargs):
 def save_user_profile(sender, instance, **kwargs):
     """Saves the user's profile"""
     instance.profile.save()
+
+
+class Notification(models.Model):
+    """Model for Notification"""
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        """String representation for the Notification"""
+        return f"Notifcation for {self.user.username}: {self.message}"
