@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import ExpensesPage from './pages/ExpensesPage';
@@ -12,9 +12,12 @@ import Signin from './pages/Signin';
 import Dashboard from './components/Dashboard';
 
 function App() {
+  const location = useLocation(); // Get the current location
+
   return (
     <div className="App">
-      <Header />
+      {/* Render Header only if not on Signup page */}
+      {location.pathname !== '/signup' && <Header />}
       <main>
         <Routes>
           {/* Redirect the root path to signup */}

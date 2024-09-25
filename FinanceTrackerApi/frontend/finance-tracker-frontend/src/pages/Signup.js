@@ -67,8 +67,6 @@ const Signup = () => {
       {/* Right Panel */}
       <div className="signup-right">
         <form className="signup-form" onSubmit={handleSubmit}>
-          <h2>Sign Up</h2>
-          
           {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
 
           <div className="form-group">
@@ -105,7 +103,11 @@ const Signup = () => {
             />
           </div>
           <button type="submit" className="signup-button">Sign Up</button>
-          <p>Already have an account? <a href="/signin">Sign In</a></p>
+
+          {/* Sign In Box */}
+          <div className="signin-box">
+            <p>Already have an account? <a href="/signin" className="signin-link">Sign In</a></p>
+          </div>
         </form>
 
         {/* Social Signup */}
