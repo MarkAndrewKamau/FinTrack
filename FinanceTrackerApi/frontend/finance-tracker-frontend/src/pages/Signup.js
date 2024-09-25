@@ -56,62 +56,75 @@ const Signup = () => {
 
   return (
     <div className="signup-container">
-      <form className="signup-form" onSubmit={handleSubmit}>
-        <h2>Sign Up</h2>
-        
-        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+      {/* Left Panel */}
+      <div className="signup-left">
+        <div className="welcome-message">
+          <h1>Welcome to FinTrack</h1>
+          <p>Manage your finances with ease, transparency, and efficiency. Track your income, expenses, and savings in one place.</p>
+        </div>
+      </div>
 
-        <div className="form-group">
-          <label htmlFor="username">Username</label>
-          <input
-            type="text"
-            id="username"
-            name="username"
-            value={formData.username}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="signup-button">Sign Up</button>
-        <p>Already have an account? <a href="/signin">Sign In</a></p>
-      </form>
-      <div className="social-signup">
-        <p>Or sign up with:</p>
-        <div className="social-icons">
-          <a href="/auth/google" className="social-icon" aria-label="Sign up with Google">
-            <FaGoogle />
-          </a>
-          <a href="/auth/facebook" className="social-icon" aria-label="Sign up with Facebook">
-            <FaFacebookF />
-          </a>
-          <a href="/auth/apple" className="social-icon" aria-label="Sign up with Apple">
-            <FaApple />
-          </a>
-          <a href="/auth/metamask" className="social-icon" aria-label="Sign up with MetaMask">
-            <FaEthereum />
-          </a>
+      {/* Right Panel */}
+      <div className="signup-right">
+        <form className="signup-form" onSubmit={handleSubmit}>
+          <h2>Sign Up</h2>
+          
+          {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+
+          <div className="form-group">
+            <label htmlFor="username">Username</label>
+            <input
+              type="text"
+              id="username"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="password">Password</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+          </div>
+          <button type="submit" className="signup-button">Sign Up</button>
+          <p>Already have an account? <a href="/signin">Sign In</a></p>
+        </form>
+
+        {/* Social Signup */}
+        <div className="social-signup">
+          <p>Or sign up with:</p>
+          <div className="social-icons">
+            <a href="/auth/google" className="social-icon" aria-label="Sign up with Google">
+              <FaGoogle />
+            </a>
+            <a href="/auth/facebook" className="social-icon" aria-label="Sign up with Facebook">
+              <FaFacebookF />
+            </a>
+            <a href="/auth/apple" className="social-icon" aria-label="Sign up with Apple">
+              <FaApple />
+            </a>
+            <a href="/auth/metamask" className="social-icon" aria-label="Sign up with MetaMask">
+              <FaEthereum />
+            </a>
+          </div>
         </div>
       </div>
     </div>
