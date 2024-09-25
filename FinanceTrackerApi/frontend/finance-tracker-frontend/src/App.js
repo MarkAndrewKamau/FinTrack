@@ -16,8 +16,8 @@ function App() {
 
   return (
     <div className="App">
-      {/* Render Header only if not on Signup page */}
-      {location.pathname !== '/signup' && <Header />}
+      {/* Render Header only if not on Signup or Signin page */}
+      {location.pathname !== '/signup' && location.pathname !== '/signin' && <Header />}
       <main>
         <Routes>
           {/* Redirect the root path to signup */}
