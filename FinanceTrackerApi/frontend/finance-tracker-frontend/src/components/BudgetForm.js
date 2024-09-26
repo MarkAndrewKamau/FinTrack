@@ -10,6 +10,13 @@ function BudgetForm({ onSubmit }) {
   const [endDate, setEndDate] = useState(null);
   const [error, setError] = useState('');
 
+  const formatDate = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setError('');
@@ -30,9 +37,9 @@ function BudgetForm({ onSubmit }) {
       return;
     }
 
-    // Ensure dates are in YYYY-MM-DD format
-    const formattedStartDate = startDate ? startDate.toISOString().split('T')[0] : '';
-    const formattedEndDate = endDate ? endDate.toISOString().split('T')[0] : '';
+    // Format dates as YYYY-MM-DD
+    const formattedStartDate = formatDate(startDate);
+    const formattedEndDate = formatDate(endDate);
 
     const budgetData = { 
       amount: parseFloat(amount), // Ensure it's a number
