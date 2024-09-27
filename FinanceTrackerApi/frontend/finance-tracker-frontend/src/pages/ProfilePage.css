@@ -1,65 +1,157 @@
-/* General Styling */
-.p-6 {
-    padding: 1.5rem;
+/* General styles */
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Container for the profile page */
+.container {
+  max-width: 600px;
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+  background-color: #1e74e6;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
+  transition: transform 0.3s ease;
+  flex-grow: 1; /* Ensure the container expands to fill available space */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* Space between elements */
+}
+
+.container:hover {
+  transform: scale(1.02);
+}
+
+/* Heading style */
+h2 {
+  font-size: 28px;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+  animation: fadeIn 0.5s;
+}
+
+/* Keyframes for heading animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
   }
-  
-  .bg-white {
-    background-color: #ffffff;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  .rounded-lg {
-    border-radius: 0.5rem;
-  }
-  
-  .shadow-lg {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .text-xl {
-    font-size: 1.25rem;
-  }
-  
-  .text-2xl {
-    font-size: 1.5rem;
-  }
-  
-  .text-3xl {
-    font-size: 1.875rem;
-  }
-  
-  .text-lg {
-    font-size: 1.125rem;
-  }
-  
-  .font-bold {
-    font-weight: 700;
-  }
-  
-  .font-semibold {
-    font-weight: 600;
-  }
-  
-  .mb-6 {
-    margin-bottom: 1.5rem;
-  }
-  
-  .mb-4 {
-    margin-bottom: 1rem;
-  }
-  
-  .border-b {
-    border-bottom: 1px solid #e5e7eb;
-  }
-  
-  .pb-4 {
-    padding-bottom: 1rem;
-  }
-  
-  /* User Info */
-  label {
-    display: block;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  
+}
+
+/* Paragraph styles */
+p {
+  font-size: 16px;
+  color: #555;
+  margin: 10px 0;
+}
+
+/* Form styles */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Label styles */
+label {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Input styles */
+input[type="text"], 
+input[type="date"], 
+input[type="email"], 
+textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  width: 100%; /* Ensure inputs take full width */
+}
+
+input:focus, textarea:focus {
+  border-color: #007BFF;
+  outline: none;
+}
+
+/* Button styles */
+button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+  align-self: flex-end; /* Align the button to the right */
+  margin-top: 20px; /* Space above the button */
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: scale(1.05);
+}
+
+/* Error message styles */
+.error-message {
+  color: red;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+/* Profile details style */
+.profile-details {
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f1f1f1;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between detail items */
+}
+
+.profile-details:hover {
+  background-color: #e2e2e2;
+}
+
+.profile-details div {
+  font-size: 16px;
+}
+
+/* Styling for update feedback message */
+.update-message {
+  color: green;
+  margin-top: 10px;
+  font-weight: bold;
+  animation: fadeIn 0.5s;
+}
+
+/* Footer styles */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  position: relative;
+  bottom: 0;
+  width: 100%;
+  margin-top: auto; /* Push footer to the bottom */
+}

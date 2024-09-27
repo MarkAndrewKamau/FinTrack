@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './ProfilePage.css'; // Import the CSS file
 
 function ProfilePage() {
   const [profile, setProfile] = useState(null);
@@ -8,6 +9,7 @@ function ProfilePage() {
     bio: '',
     location: '',
     birth_date: '',
+    profile_pic: null,
   });
 
   // Fetch profile on component mount
@@ -45,19 +47,39 @@ function ProfilePage() {
     });
   };
 
+  // Handle profile picture change
+  const handleProfilePicChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === 'image/jpeg') {
+      setNewProfile({
+        ...newProfile,
+        profile_pic: file,
+      });
+    } else {
+      setErrorMessage('Please upload a JPG image only.');
+    }
+  };
+
   // Handle form submission for profile creation
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token'); // Retrieve JWT token
 
+    const formData = new FormData();
+    formData.append('bio', newProfile.bio);
+    formData.append('location', newProfile.location);
+    formData.append('birth_date', newProfile.birth_date);
+    if (newProfile.profile_pic) {
+      formData.append('profile_pic', newProfile.profile_pic);
+    }
+
     try {
       const response = await fetch('http://127.0.0.1:8000/api/profiles/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`, // Include token in headers
         },
-        body: JSON.stringify(newProfile),
+        body: formData,
       });
 
       if (response.ok) {
@@ -73,17 +95,17 @@ function ProfilePage() {
   };
 
   if (errorMessage) {
-    return <div>{errorMessage}</div>;
+    return <div className="error-message">{errorMessage}</div>;
   }
 
   if (!profile) {
     // If no profile exists, show a form to create one
     return (
-      <div>
+      <div className="profile-container">
         <h2>No profile found</h2>
         {isEditing ? (
-          <form onSubmit={handleSubmit}>
-            <div>
+          <form onSubmit={handleSubmit} className="profile-form">
+            <div className="form-group">
               <label htmlFor="bio">Bio</label>
               <input
                 type="text"
@@ -93,7 +115,7 @@ function ProfilePage() {
                 onChange={handleInputChange}
               />
             </div>
-            <div>
+            <div className="form-group">
               <label htmlFor="location">Location</label>
               <input
                 type="text"
@@ -103,7 +125,7 @@ function ProfilePage() {
                 onChange={handleInputChange}
               />
             </div>
-            <div>
+            <div className="form-group">
               <label htmlFor="birth_date">Birth Date</label>
               <input
                 type="date"
@@ -113,26 +135,41 @@ function ProfilePage() {
                 onChange={handleInputChange}
               />
             </div>
-            <button type="submit">Save Profile</button>
+            <div className="form-group">
+              <label htmlFor="profile_pic">Profile Picture (JPG only)</label>
+              <input
+                type="file"
+                id="profile_pic"
+                name="profile_pic"
+                accept="image/jpeg"
+                onChange={handleProfilePicChange}
+              />
+            </div>
+            <button type="submit" className="btn">Save Profile</button>
           </form>
         ) : (
-          <button onClick={() => setIsEditing(true)}>Create Profile</button>
+          <button className="btn" onClick={() => setIsEditing(true)}>Create Profile</button>
         )}
       </div>
     );
   }
 
   return (
-    <div className="container">
+    <div className="profile-container">
       <h2>Profile Details</h2>
       <p><strong>Bio:</strong> {profile.bio}</p>
       <p><strong>Location:</strong> {profile.location}</p>
       <p><strong>Birth Date:</strong> {profile.birth_date}</p>
-      <button onClick={() => setIsEditing(true)}>Edit Profile</button>
+      {profile.profile_pic && (
+        <div>
+          <img src={`http://127.0.0.1:8000${profile.profile_pic}`} alt="Profile" className="profile-pic" />
+        </div>
+      )}
+      <button className="btn" onClick={() => setIsEditing(true)}>Edit Profile</button>
 
       {isEditing && (
-        <form onSubmit={handleSubmit}>
-          <div>
+        <form onSubmit={handleSubmit} className="profile-form">
+          <div className="form-group">
             <label htmlFor="bio">Bio</label>
             <input
               type="text"
@@ -142,7 +179,7 @@ function ProfilePage() {
               onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className="form-group">
             <label htmlFor="location">Location</label>
             <input
               type="text"
@@ -152,7 +189,7 @@ function ProfilePage() {
               onChange={handleInputChange}
             />
           </div>
-          <div>
+          <div className="form-group">
             <label htmlFor="birth_date">Birth Date</label>
             <input
               type="date"
@@ -162,7 +199,17 @@ function ProfilePage() {
               onChange={handleInputChange}
             />
           </div>
-          <button type="submit">Save Profile</button>
+          <div className="form-group">
+            <label htmlFor="profile_pic">Profile Picture (JPG only)</label>
+            <input
+              type="file"
+              id="profile_pic"
+              name="profile_pic"
+              accept="image/jpeg"
+              onChange={handleProfilePicChange}
+            />
+          </div>
+          <button type="submit" className="btn">Save Profile</button>
         </form>
       )}
     </div>
