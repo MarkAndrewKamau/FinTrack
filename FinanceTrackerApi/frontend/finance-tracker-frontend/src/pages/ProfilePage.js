@@ -106,11 +106,11 @@ function ProfilePage() {
         {isEditing ? (
           <form onSubmit={handleSubmit} className="profile-form">
             <div className="form-group">
-              <label htmlFor="bio">Bio</label>
+              <label htmlFor="Name">Full Name</label>
               <input
                 type="text"
-                id="bio"
-                name="bio"
+                id="Full Name"
+                name="Full Name"
                 value={newProfile.bio}
                 onChange={handleInputChange}
               />
@@ -170,12 +170,12 @@ function ProfilePage() {
       {isEditing && (
         <form onSubmit={handleSubmit} className="profile-form">
           <div className="form-group">
-            <label htmlFor="bio">Bio</label>
+            <label htmlFor="bio">Full Name</label>
             <input
               type="text"
-              id="bio"
-              name="bio"
-              value={newProfile.bio}
+              id="name"
+              name="Full Name"
+              value={newProfile.name}
               onChange={handleInputChange}
             />
           </div>

@@ -12,7 +12,7 @@ body, html {
 /* Container for the profile page */
 .container {
   max-width: 600px;
-  width: 100%;
+  width: 50%;
   margin: auto;
   padding: 20px;
   background-color: #1e74e6;
@@ -82,7 +82,7 @@ textarea {
   border-radius: 4px;
   font-size: 16px;
   transition: border-color 0.3s;
-  width: 100%; /* Ensure inputs take full width */
+  width: 50%; /* Ensure inputs take full width */
 }
 
 input:focus, textarea:focus {
@@ -151,7 +151,7 @@ footer {
   text-align: center;
   padding: 10px 0;
   position: relative;
-  bottom: 0;
+  bottom: 100;
   width: 100%;
   margin-top: auto; /* Push footer to the bottom */
 }

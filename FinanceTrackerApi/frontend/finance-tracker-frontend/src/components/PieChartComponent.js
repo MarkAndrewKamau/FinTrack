@@ -2,7 +2,8 @@
 
 import React from "react";
 import { TrendingUp } from "lucide-react";
-import { Label, Pie, PieChart, Tooltip } from "recharts"; // Ensure all necessary imports from recharts
+import { Label, Pie, PieChart } from "recharts";
+import { Cell } from "recharts";
 
 import {
   Card,
@@ -14,50 +15,25 @@ import {
 } from "./ui/card"; // Adjusted path
 import {
   ChartContainer,
-  ChartTooltipContent,
 } from "./ui/chart"; // Adjusted path
 
+// Replace this with your actual user data
+const userData = {
+  expenses: 1500,
+  income: 3000,
+  budget: 2000,
+};
+
 const chartData = [
-  { category: "Expenses", amount: 1500, fill: "var(--color-expenses)" },
-  { category: "Income", amount: 3000, fill: "var(--color-income)" },
-  { category: "Budget", amount: 2000, fill: "var(--color-budget)" },
+  { category: "Expenses", amount: userData.expenses, fill: "#ff6384" }, // Light Red
+  { category: "Income", amount: userData.income, fill: "#36a2eb" },   // Light Blue
+  { category: "Budget", amount: userData.budget, fill: "#ffce56" },   // Light Yellow
 ];
 
 const PieChartComponent = () => {
-  // Calculate total amount using useMemo for performance optimization
   const totalAmount = React.useMemo(() => {
     return chartData.reduce((acc, curr) => acc + curr.amount, 0);
   }, []);
-
-  // Render function for the label
-  const renderLabel = ({ viewBox }) => {
-    if (viewBox && "cx" in viewBox && "cy" in viewBox) {
-      return (
-        <text
-          x={viewBox.cx}
-          y={viewBox.cy}
-          textAnchor="middle"
-          dominantBaseline="middle"
-        >
-          <tspan
-            x={viewBox.cx}
-            y={viewBox.cy}
-            className="fill-foreground text-3xl font-bold"
-          >
-            {totalAmount.toLocaleString()}
-          </tspan>
-          <tspan
-            x={viewBox.cx}
-            y={(viewBox.cy || 0) + 24}
-            className="fill-muted-foreground"
-          >
-            Total
-          </tspan>
-        </text>
-      );
-    }
-    return null; // Return null if viewBox is not valid
-  };
 
   return (
     <Card className="flex flex-col">
@@ -68,7 +44,35 @@ const PieChartComponent = () => {
       <CardContent className="flex-1 pb-0">
         <ChartContainer className="mx-auto aspect-square max-h-[250px]">
           <PieChart>
-            <Tooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+            <Label
+              content={({ viewBox }) => {
+                if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                  return (
+                    <text
+                      x={viewBox.cx}
+                      y={viewBox.cy}
+                      textAnchor="middle"
+                      dominantBaseline="middle"
+                    >
+                      <tspan
+                        x={viewBox.cx}
+                        y={viewBox.cy}
+                        className="fill-foreground text-3xl font-bold"
+                      >
+                        {totalAmount.toLocaleString()}
+                      </tspan>
+                      <tspan
+                        x={viewBox.cx}
+                        y={(viewBox.cy || 0) + 24}
+                        className="fill-muted-foreground"
+                      >
+                        Total
+                      </tspan>
+                    </text>
+                  );
+                }
+              }}
+            />
             <Pie
               data={chartData}
               dataKey="amount"
@@ -77,8 +81,11 @@ const PieChartComponent = () => {
               outerRadius={80}
               fill="#8884d8"
               strokeWidth={5}
+              isAnimationActive={false} // Disable animation for better performance
             >
-              <Label content={renderLabel} />
+              {chartData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={entry.fill} />
+              ))}
             </Pie>
           </PieChart>
         </ChartContainer>
