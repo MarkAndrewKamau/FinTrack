@@ -1,61 +1,71 @@
+/* src/Dashboard.css */
+
 .dashboard {
   padding: 20px;
-  background-color: #f4f4f9;
+  background-color: #f4f4f9; /* Light background for contrast */
   min-height: 100vh;
+  font-family: 'Arial', sans-serif; /* Use a clean, modern font */
 }
 
 .dashboard-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 30px; /* Increased margin for better spacing */
 }
 
 .dashboard-header h1 {
   font-size: 2.5rem;
-  color: #333;
+  color: #2b2b52; /* Darker color for better visibility */
+  text-transform: uppercase; /* Make the title more impactful */
+  letter-spacing: 1px; /* Slight spacing for a modern look */
 }
 
 .summary-section {
   display: flex;
   justify-content: space-around;
+  flex-wrap: wrap; /* Allow wrapping for smaller screens */
   margin-bottom: 30px;
 }
 
 .summary-card {
-  background-color: #ffffff;
+  background-color: #ffffff; /* White background for cards */
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px; /* Rounded corners for a softer look */
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1); /* Enhanced shadow for depth */
   text-align: center;
   width: 250px;
-  transition: transform 0.2s;
+  transition: transform 0.2s, box-shadow 0.2s; /* Add box-shadow transition */
 }
 
 .summary-card h2 {
-  font-size: 1.2rem;
+  font-size: 1.5rem; /* Increased font size */
   margin-bottom: 10px;
-  color: #2b2b52;
+  color: #2b2b52; /* Consistent heading color */
 }
 
 .summary-card p {
   font-size: 1.5rem;
-  color: #28a745;
+  color: #28a745; /* Green for positive values */
+  font-weight: bold; /* Make the values stand out */
 }
 
 .summary-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); /* Darker shadow on hover */
 }
 
 .budget-overview {
-  background-color: #fff;
+  background-color: #ffffff; /* White background for clarity */
   padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 
 .budget-overview h2 {
-  font-size: 1.5rem;
+  font-size: 1.8rem; /* Slightly larger for emphasis */
   color: #333;
   margin-bottom: 10px;
+  border-bottom: 2px solid #2b2b52; /* Underline for a cleaner look */
+  padding-bottom: 5px; /* Add padding to the bottom */
 }
 
 .budget-overview ul {
@@ -64,11 +74,30 @@
 }
 
 .budget-overview li {
-  background-color: #f9f9f9;
-  padding: 10px;
+  background-color: #f9f9f9; /* Light grey background for list items */
+  padding: 15px; /* Increased padding for better readability */
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px; /* Slightly rounded corners */
   margin-bottom: 10px;
   font-size: 1rem;
   color: #555;
+  transition: background-color 0.2s; /* Transition for hover effect */
+}
+
+.budget-overview li:hover {
+  background-color: #e8e8e8; /* Darker background on hover */
+  cursor: pointer; /* Change cursor to indicate interactivity */
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .summary-section {
+    flex-direction: column; /* Stack cards on smaller screens */
+    align-items: center; /* Center align items */
+  }
+
+  .summary-card {
+    width: 90%; /* Make cards responsive */
+    margin-bottom: 20px; /* Add space between stacked cards */
+  }
 }

@@ -1,17 +1,17 @@
-// src/components/Dashboard.js
 import React, { useState, useEffect } from 'react';
 import { fetchIncome, fetchExpenses, fetchBudgets } from '../api';
 import Notifications from './Notifications';
-import { Component as PieChart } from './PieChart'; // Adjust the import path if needed
+import PieChartComponent from './PieChartComponent'; // Import the PieChartComponent
 import './Dashboard.css';
 
 const Dashboard = () => {
-    const [income, setIncome] = useState([]);
-    const [expenses, setExpenses] = useState([]);
+    const [income, setIncome] = useState([]);  // Initialize as empty array
+    const [expenses, setExpenses] = useState([]);  // Initialize as empty array
     const [budgets, setBudgets] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    // Fetch income, expenses, and budgets data on component mount
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -33,6 +33,7 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
+    // Ensure income and expenses are always arrays
     const totalIncome = (income || []).reduce((sum, item) => sum + parseFloat(item.amount), 0);
     const totalExpenses = (expenses || []).reduce((sum, item) => sum + parseFloat(item.amount), 0);
     const savings = totalIncome - totalExpenses;
@@ -75,11 +76,10 @@ const Dashboard = () => {
                 </ul>
             </div>
 
-            <div className="chart-section">
-                <h2>Visitors Overview</h2>
-                <PieChartComponent />
-            </div>
+            {/* Include the PieChartComponent here */}
+            <PieChartComponent />
 
+            {/* Include the Notifications component here */}
             <Notifications />
         </div>
     );
