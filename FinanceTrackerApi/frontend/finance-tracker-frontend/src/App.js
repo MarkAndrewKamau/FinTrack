@@ -10,7 +10,6 @@ import ProfilePage from './pages/ProfilePage';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import Dashboard from './components/Dashboard';
-
 function App() {
   const location = useLocation(); // Get the current location
 
@@ -21,7 +20,7 @@ function App() {
       <main>
         <Routes>
           {/* Redirect the root path to signup */}
-          <Route path="/" element={<Navigate to="/signup" />} />
+          <Route path="/" element={<Navigate to="/Dashboard" />} />
 
           {/* Public Routes */}
           <Route path="/signup" element={<Signup />} />
