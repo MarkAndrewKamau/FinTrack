@@ -50,7 +50,7 @@ After starting the server, you can access the API at `http://localhost:3000`. Us
 | Method | Endpoint             | Description                   |
 |--------|----------------------|-------------------------------|
 | POST   | /register            | Register a new user           |
-| POST   | /api/token           | 
+| POST   | /api/token           | Login in a new user
 | POST   | /auth-register       | Authenticate a user           |
 | GET    | /budgets             | Retrieve user budgets         |
 | POST   | /budgets             | Create a new budget           |
