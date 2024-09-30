@@ -106,7 +106,12 @@ class FinancialReportSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = ['user', 'id', 'bio', 'location', 'birth_date']
+        fields = ['user', 'id', 'bio', 'location', 'birth_date', 'profile_pic']
+
+        extra_kwargs = {
+            'user': {'read_only': True},
+            'profile_pic': {'read_only': False}
+        }
 
 
 class NotificationSerializer(serializers.ModelSerializer):
