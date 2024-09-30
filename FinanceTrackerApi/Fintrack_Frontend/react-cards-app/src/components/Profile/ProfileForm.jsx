@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 
-const ProfileForm = ({ user = {}, onUpdate }) => {
-  // Default empty string values for form fields
+const ProfileForm = ({ profile = {}, onUpdate }) => {
   const [formData, setFormData] = useState({
-    name: user.name || '',
-    email: user.email || '',
-    phone: user.phone || '',
-    location: user.location || '',
+    bio: profile.bio || '',
+    location: profile.location || '',
+    birthDate: profile.birth_date || '',
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = (e) => {
@@ -22,39 +21,19 @@ const ProfileForm = ({ user = {}, onUpdate }) => {
     <form onSubmit={handleSubmit} className="bg-white shadow rounded-lg p-6">
       <h3 className="text-xl font-semibold mb-4">Edit Profile</h3>
       <div className="grid grid-cols-1 gap-6">
+        {/* Bio */}
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            value={formData.name}
+          <label htmlFor="bio" className="block text-sm font-medium text-gray-700">Bio</label>
+          <textarea
+            name="bio"
+            id="bio"
+            value={formData.bio}
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+            maxLength="350"  // Limit the input to the max length defined in the model
           />
         </div>
-        <div>
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email</label>
-          <input
-            type="email"
-            name="email"
-            id="email"
-            value={formData.email}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          />
-        </div>
-        <div>
-          <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone</label>
-          <input
-            type="tel"
-            name="phone"
-            id="phone"
-            value={formData.phone}
-            onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
-          />
-        </div>
+        {/* Location */}
         <div>
           <label htmlFor="location" className="block text-sm font-medium text-gray-700">Location</label>
           <input
@@ -62,6 +41,18 @@ const ProfileForm = ({ user = {}, onUpdate }) => {
             name="location"
             id="location"
             value={formData.location}
+            onChange={handleChange}
+            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+          />
+        </div>
+        {/* Birth Date */}
+        <div>
+          <label htmlFor="birthDate" className="block text-sm font-medium text-gray-700">Birth Date</label>
+          <input
+            type="date"
+            name="birthDate"
+            id="birthDate"
+            value={formData.birthDate}
             onChange={handleChange}
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
           />
