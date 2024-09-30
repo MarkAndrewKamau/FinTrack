@@ -1,5 +1,5 @@
-import BudgetList from "./budgetList";
-import BudgetForm from "./budgetForm";
+import BudgetList from "./BudgetList";
+import BudgetForm from "./BudgetForm";
 
 import React from "react";
 

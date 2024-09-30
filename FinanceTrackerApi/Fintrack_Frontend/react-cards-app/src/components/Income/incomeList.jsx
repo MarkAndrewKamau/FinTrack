@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function IncomeList({ incomes = [] }) {  // Provide default empty array for incomes
+function IncomeList({ incomes }) {
   const [sortBy, setSortBy] = useState('date');
   const [filterSource, setFilterSource] = useState('');
 

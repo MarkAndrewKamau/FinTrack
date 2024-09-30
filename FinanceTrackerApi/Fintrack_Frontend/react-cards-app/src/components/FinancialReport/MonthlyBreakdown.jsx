@@ -1,4 +1,3 @@
-// components/financialreport/MonthlyBreakdown.jsx
 import React from 'react';
 
 function MonthlyBreakdown({ monthlyData }) {

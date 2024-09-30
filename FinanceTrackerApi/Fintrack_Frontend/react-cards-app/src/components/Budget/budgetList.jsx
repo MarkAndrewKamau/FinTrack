@@ -1,6 +1,6 @@
 import React from 'react';
 
-function BudgetList({ budgets = [], onDelete }) {
+function BudgetList({ budgets, onDelete }) {
   return (
     <div>
       <h2 className="text-xl font-semibold mb-4">Your Budgets</h2>
