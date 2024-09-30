@@ -42,25 +42,25 @@ const Dashboard = () => {
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 
-  // Calculate totals for cards
-  const totalBudget = budgets.reduce((total, budget) => total + budget.amount, 0);
-  const totalIncome = incomes.reduce((total, income) => total + income.amount, 0);
-  const totalExpenses = expenses.reduce((total, expense) => total + expense.amount, 0);
+  // Convert amounts to numbers and calculate totals for cards
+  const totalBudget = budgets.reduce((total, budget) => total + parseFloat(budget.amount), 0);
+  const totalIncome = incomes.reduce((total, income) => total + parseFloat(income.amount), 0);
+  const totalExpenses = expenses.reduce((total, expense) => total + parseFloat(expense.amount), 0);
 
   const cards = [
     {
       title: 'Total Balance',
-      description: `$${totalIncome - totalExpenses}`,
+      description: `$${(totalIncome - totalExpenses).toFixed(2)}`, // Ensure 2 decimal places
       icon: <FiDollarSign className="text-3xl text-green-500" />,
     },
     {
       title: 'Income',
-      description: `$${totalIncome}`,
+      description: `$${totalIncome.toFixed(2)}`, // Ensure 2 decimal places
       icon: <FiTrendingUp className="text-3xl text-blue-500" />,
     },
     {
       title: 'Expenses',
-      description: `$${totalExpenses}`,
+      description: `$${totalExpenses.toFixed(2)}`, // Ensure 2 decimal places
       icon: <FiTrendingDown className="text-3xl text-red-500" />,
     },
   ];
