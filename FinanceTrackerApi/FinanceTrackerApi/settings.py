@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'rest_framework.authtoken',
-
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
