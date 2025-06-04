@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FaGoogle, FaFacebookF, FaApple, FaEthereum } from 'react-icons/fa';
-import './Signup.css';
+import './signup.css';
 import { signup } from '../services/authService'; // Import the signup function
 import { useNavigate } from 'react-router-dom'; // Import useNavigate to redirect users
 
