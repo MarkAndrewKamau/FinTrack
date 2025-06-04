@@ -106,19 +106,19 @@ AUTHENTICATION_BACKENDS = (
 )
 
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        },
-        'CLIENT_ID': 'os.environ.get("GOOGLE_CLIENT_ID")',
-        'SECRET': 'os.environ.get("GOOGLE_SECRET")',
-    }
-}
+# SOCIALACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email',
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         },
+#         'CLIENT_ID': 'os.environ.get("GOOGLE_CLIENT_ID")',
+#         'SECRET': 'os.environ.get("GOOGLE_SECRET")',
+#     }
+# }
 
 SITE_ID = 2
 

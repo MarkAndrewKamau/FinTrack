@@ -28,9 +28,7 @@ function ExpenseForm({ onSubmit }) {
         setDescription('');
         setDate('');
         setCategory('');
-        
-        // Fetch updated list from the parent without directly passing the new expense
-        onSubmit();  // Call the function to refresh expenses without passing data
+        onSubmit();
       } else {
         console.error('Error creating expense:', response.statusText);
       }
@@ -40,48 +38,55 @@ function ExpenseForm({ onSubmit }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       <div>
-        <label htmlFor="amount" className="block text-sm font-medium text-gray-700">Amount</label>
+        <label htmlFor="amount" className="block text-base font-medium text-gray-700 mb-1">Amount</label>
         <input
           type="number"
           id="amount"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          placeholder="Enter amount"
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm text-base focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+          aria-describedby="amount-error"
         />
       </div>
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700">Description</label>
+        <label htmlFor="description" className="block text-base font-medium text-gray-700 mb-1">Description</label>
         <input
           type="text"
           id="description"
           value={description}
-          onChange={(e) => setDescription(e.target.value)}
+          onChange={(e) => setAmount(e.target.value)}
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          placeholder="Enter description"
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm text-base focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+          aria-describedby="description-error"
         />
       </div>
       <div>
-        <label htmlFor="date" className="block text-sm font-medium text-gray-700">Date</label>
+        <label htmlFor="date" className="block text-base font-medium text-gray-700 mb-1">Date</label>
         <input
           type="date"
           id="date"
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          placeholder="YYYY-MM-DD"
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm text-base focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+          aria-describedby="date-error"
         />
       </div>
       <div>
-        <label htmlFor="category" className="block text-sm font-medium text-gray-700">Category</label>
+        <label htmlFor="category" className="block text-base font-medium text-gray-700 mb-1">Category</label>
         <select
           id="category"
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           required
-          className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+          className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm text-base focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"
+          aria-describedby="category-error"
         >
           <option value="">Select a category</option>
           <option value="food">Food</option>
@@ -91,7 +96,11 @@ function ExpenseForm({ onSubmit }) {
           <option value="other">Other</option>
         </select>
       </div>
-      <button type="submit" className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+      <button
+        type="submit"
+        className="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-base font-semibold text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition duration-200"
+        aria-label="Add expense"
+      >
         Add Expense
       </button>
     </form>
