@@ -15,13 +15,13 @@ const Dashboard = () => {
       try {
         const token = localStorage.getItem('token'); // Adjust token retrieval as necessary
 
-        const budgetResponse = await axios.get('http://localhost:8000/api/budgets/', {
+        const budgetResponse = await axios.get('https://finance-tracker-backend-8j8x.onrender.com/api/budgets/', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const incomeResponse = await axios.get('http://localhost:8000/api/incomes/', {
+        const incomeResponse = await axios.get('https://finance-tracker-backend-8j8x.onrender.com/api/incomes/', {
           headers: { Authorization: `Bearer ${token}` },
         });
-        const expenseResponse = await axios.get('http://localhost:8000/api/expenses/', {
+        const expenseResponse = await axios.get('https://finance-tracker-backend-8j8x.onrender.com/api/expenses/', {
           headers: { Authorization: `Bearer ${token}` },
         });
 

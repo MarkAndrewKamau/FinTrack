@@ -16,7 +16,7 @@ function ProfilePage() {
       const token = localStorage.getItem('token'); // Retrieve JWT token from local storage
 
       try {
-        const response = await fetch('http://127.0.0.1:8000/api/profiles/', {
+        const response = await fetch('https://finance-tracker-backend-8j8x.onrender.com/api/profiles/', {
           headers: {
             'Authorization': `Bearer ${token}`, // Include token in request headers
           },
@@ -56,7 +56,7 @@ function ProfilePage() {
     formData.append('birth_date', newProfile.birth_date);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/profiles/', {
+      const response = await fetch('https://finance-tracker-backend-8j8x.onrender.com/api/profiles/', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`, // Include token in headers

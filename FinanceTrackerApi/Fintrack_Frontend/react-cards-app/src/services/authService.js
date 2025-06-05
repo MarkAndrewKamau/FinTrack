@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // Define the base URL for your API
-const API_URL = 'http://localhost:8000/api'; // Update this to match your backend URL
+const API_URL = 'https://finance-tracker-backend-8j8x.onrender.com/api'; // Update this to match your backend URL
 
 // Function to handle user signup
 export const signup = async (username, email, password) => {

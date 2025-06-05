@@ -23,7 +23,7 @@ function IncomeForm({ onSubmit }) {
     const token = localStorage.getItem('token');
     
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/incomes/', {
+      const response = await fetch('https://finance-tracker-backend-8j8x.onrender.com/api/incomes/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

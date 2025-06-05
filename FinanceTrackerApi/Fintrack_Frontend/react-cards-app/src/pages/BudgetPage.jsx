@@ -8,7 +8,7 @@ function BudgetsPage() {
 
   // Fetch Budgets from API
   const fetchBudgets = useCallback(async () => {
-    const response = await fetch('http://127.0.0.1:8000/api/budgets/', {
+    const response = await fetch('https://finance-tracker-backend-8j8x.onrender.com/api/budgets/', {
       headers: {
         'Authorization': `Bearer ${token}`, // Set token in the request headers
       },
@@ -29,7 +29,7 @@ function BudgetsPage() {
 
   // Handle form submission and fetch budgets after a new one is added
   const handleBudgetSubmit = async (budgetData) => {
-    const response = await fetch('http://127.0.0.1:8000/api/budgets/', {
+    const response = await fetch('https://finance-tracker-backend-8j8x.onrender.com/api/budgets/', {
       method: 'POST',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -48,7 +48,7 @@ function BudgetsPage() {
 
   // Handle budget deletion
   const handleDeleteBudget = async (budgetId) => {
-    const response = await fetch(`http://127.0.0.1:8000/api/budgets/${budgetId}/`, {
+    const response = await fetch(`https://finance-tracker-backend-8j8x.onrender.com/api/budgets/${budgetId}/`, {
       method: 'DELETE',
       headers: {
         'Authorization': `Bearer ${token}`,

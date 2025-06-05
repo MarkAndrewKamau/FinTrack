@@ -14,7 +14,7 @@ function ExpenseForm({ onSubmit }) {
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/expenses/', {
+      const response = await fetch('https://finance-tracker-backend-8j8x.onrender.com/api/expenses/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
