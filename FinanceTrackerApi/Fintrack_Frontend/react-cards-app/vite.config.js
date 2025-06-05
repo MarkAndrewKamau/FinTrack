@@ -9,4 +9,7 @@ export default defineConfig({
       plugins: [tailwindcss()],
     },
   },
+  build: {
+    outDir: 'build', // Matches Render's Publish Directory
+  },
 });
