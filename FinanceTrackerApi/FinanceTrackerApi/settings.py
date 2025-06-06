@@ -35,7 +35,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     'localhost',
     '127.0.0.1',
-    'https://finance-tracker-backend-8j8x.onrender.com',
+    'finance-tracker-backend-8j8x.onrender.com',
 ]
 
 
