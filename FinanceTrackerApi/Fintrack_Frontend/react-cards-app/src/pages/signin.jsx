@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { signin } from '../services/authService';
-import './signin.css'; // Keep this if you have custom styles; remove if using Tailwind only
+import './signin.css';
 
 const Signin = () => {
   const [formData, setFormData] = useState({
@@ -39,16 +40,37 @@ const Signin = () => {
   };
 
   return (
-    <div className="signin-container min-h-screen flex items-center justify-center bg-gray-100">
-      <div className="signin-box w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-3xl font-bold text-center mb-4">Welcome Back</h2>
-        <p className="subtext text-lg text-gray-600 text-center mb-6">Sign in to continue</p>
+    <motion.div
+      className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-dark px-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <motion.div
+        className="w-full max-w-md p-8 neumorphic"
+        initial={{ y: 20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <h2 className="text-4xl font-bold text-center text-primary mb-4">Welcome Back</h2>
+        <p className="text-lg text-gray-600 dark:text-gray-300 text-center mb-6">Sign in to continue</p>
 
-        {errorMessage && <p className="error-message text-red-500 text-center mb-4">{errorMessage}</p>}
+        {errorMessage && (
+          <motion.p
+            className="text-red-500 text-center mb-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3 }}
+          >
+            {errorMessage}
+          </motion.p>
+        )}
 
-        <form className="signin-form space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="username" className="block text-lg font-medium text-gray-700">Username</label>
+            <label htmlFor="username" className="block text-lg font-medium text-gray-700 dark:text-gray-200">
+              Username
+            </label>
             <input
               type="text"
               id="username"
@@ -57,12 +79,15 @@ const Signin = () => {
               onChange={handleChange}
               required
               placeholder="Enter your username"
-              className="input-field w-full p-3 mt-1 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-field"
+              aria-required="true"
             />
           </div>
 
           <div className="form-group">
-            <label htmlFor="password" className="block text-lg font-medium text-gray-700">Password</label>
+            <label htmlFor="password" className="block text-lg font-medium text-gray-700 dark:text-gray-200">
+              Password
+            </label>
             <input
               type="password"
               id="password"
@@ -71,18 +96,32 @@ const Signin = () => {
               onChange={handleChange}
               required
               placeholder="Enter your password"
-              className="input-field w-full p-3 mt-1 border border-gray-300 rounded-md text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-field"
+              aria-required="true"
             />
           </div>
 
-          <button type="submit" className="signin-button w-full p-3 bg-blue-600 text-white text-lg font-semibold rounded-md hover:bg-blue-700 transition">Sign In</button>
+          <motion.button
+            type="submit"
+            className="button"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+          >
+            Sign In
+          </motion.button>
         </form>
 
-        <div className="alternative-signin text-center mt-6">
-          <p className="text-lg">Don't have an account? <a href="/signup" className="link text-blue-600 hover:underline">Sign Up</a></p>
+        <div className="text-center mt-6">
+          <p className="text-lg text-gray-600 dark:text-gray-300">
+            Don't have an account?{' '}
+            <a href="/signup" className="text-primary hover:underline">
+              Sign Up
+            </a>
+          </p>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 
