@@ -19,7 +19,7 @@
 
 @layer components {
   .neumorphic {
-    @apply bg-gray-100 dark:bg-gray-800 rounded-xl shadow-neumorphic dark:shadow-neumorphic-dark transition-shadow duration-300;
+    @apply bg-gray-100 dark:bg-gray-800 rounded-xl shadow-[10px_10px_20px_rgba(0,0,0,0.1),-10px_-10px_20px_rgba(255,255,255,0.7)] dark:shadow-[10px_10px_20px_rgba(0,0,0,0.3),-10px_-10px_20px_rgba(50,50,50,0.1)] transition-shadow duration-300;
   }
 
   .input-field {
@@ -35,8 +35,18 @@
   }
 }
 
+@layer utilities {
+  .shadow-neumorphic {
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.1), -10px -10px 20px rgba(255,255,255,0.7);
+  }
+  .shadow-neumorphic-dark {
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.3), -10px -10px 20px rgba(50,50,50,0.1);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .button, .input-field, .social-icon {
-    transition: none;
+  .button, .input-field, .social-icon, .neumorphic {
+    transition: none !important;
+    animation: none !important;
   }
 }
