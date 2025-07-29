@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-d
 import { ThemeContext } from './main';
 import Signin from './pages/signin';
 import Signup from './pages/signup';
+import Dashboard from './pages/DashboardPage';
 
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
