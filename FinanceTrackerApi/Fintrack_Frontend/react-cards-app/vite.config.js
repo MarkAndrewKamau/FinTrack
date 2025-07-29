@@ -10,6 +10,6 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: 'build', // Matches Render's Publish Directory
+    outDir: 'dist', // Matches Render's Publish Directory
   },
 });
