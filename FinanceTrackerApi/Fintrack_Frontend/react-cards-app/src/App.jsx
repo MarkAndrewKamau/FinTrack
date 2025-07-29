@@ -14,6 +14,7 @@ function App() {
           <Route path="/" element={<Navigate to="/signup" />} />
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         </Routes>
         <button
           onClick={toggleTheme}
