@@ -4,6 +4,10 @@ import { ThemeContext } from './main';
 import Signin from './pages/signin';
 import Signup from './pages/signup';
 import Dashboard from './pages/DashboardPage';
+import IncomePage from './pages/IncomePage';
+import ExpensesPage from './pages/ExpensesPage';
+import BudgetsPage from './pages/BudgetPage';
+import FinancialReportPage from './pages/FinancialReportPage';
 
 function App() {
   const { theme, toggleTheme } = useContext(ThemeContext);
@@ -16,6 +20,10 @@ function App() {
           <Route path="/signin" element={<Signin />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/income" element={<IncomePage />} />
+          <Route path="/expenses" element={<ExpensesPage />} />
+          <Route path="/budget" element={<BudgetsPage />} />
+          <Route path="/financial-report" element={<FinancialReportPage />} />
         </Routes>
         <button
           onClick={toggleTheme}

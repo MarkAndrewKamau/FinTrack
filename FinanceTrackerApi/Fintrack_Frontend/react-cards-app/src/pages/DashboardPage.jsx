@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Card from '../Card';
 import { FiDollarSign, FiTrendingUp, FiTrendingDown } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import './DashboardPage.css';
 
 const Dashboard = () => {
@@ -36,19 +37,9 @@ const Dashboard = () => {
         console.error('Error fetching data:', error.message);
         setError('Failed to fetch data. Using sample data.');
         
-        // Fallback mock data
-        setBudgets([
-          { id: 1, amount: 2000, category: 'Food' },
-          { id: 2, amount: 1500, category: 'Transportation' },
-        ]);
-        setIncomes([
-          { id: 1, amount: 5000, source: 'Salary' },
-          { id: 2, amount: 500, source: 'Freelance' },
-        ]);
-        setExpenses([
-          { id: 1, amount: 1200, category: 'Food' },
-          { id: 2, amount: 800, category: 'Transportation' },
-        ]);
+        setBudgets([{ id: 1, amount: 2000, category: 'Food' }, { id: 2, amount: 1500, category: 'Transportation' }]);
+        setIncomes([{ id: 1, amount: 5000, source: 'Salary' }, { id: 2, amount: 500, source: 'Freelance' }]);
+        setExpenses([{ id: 1, amount: 1200, category: 'Food' }, { id: 2, amount: 800, category: 'Transportation' }]);
       } finally {
         setLoading(false);
       }
@@ -72,27 +63,22 @@ const Dashboard = () => {
   const totalExpenses = expenses.reduce((total, expense) => total + (parseFloat(expense.amount) || 0), 0);
 
   const cards = [
-    {
-      title: 'Total Balance',
-      description: `$${(totalIncome - totalExpenses).toFixed(2)}`,
-      icon: <FiDollarSign className="text-3xl text-green-500" />,
-    },
-    {
-      title: 'Income',
-      description: `$${totalIncome.toFixed(2)}`,
-      icon: <FiTrendingUp className="text-3xl text-blue-500" />,
-    },
-    {
-      title: 'Expenses',
-      description: `$${totalExpenses.toFixed(2)}`,
-      icon: <FiTrendingDown className="text-3xl text-red-500" />,
-    },
+    { title: 'Total Balance', description: `$${(totalIncome - totalExpenses).toFixed(2)}`, icon: <FiDollarSign className="text-3xl text-green-500" /> },
+    { title: 'Income', description: `$${totalIncome.toFixed(2)}`, icon: <FiTrendingUp className="text-3xl text-blue-500" /> },
+    { title: 'Expenses', description: `$${totalExpenses.toFixed(2)}`, icon: <FiTrendingDown className="text-3xl text-red-500" /> },
   ];
 
   return (
     <div className="dashboard-container">
       <h1 className="dashboard-title">Dashboard</h1>
       {error && <div className="warning-banner"><p>{error}</p></div>}
+      <div className="nav-buttons">
+        <Link to="/dashboard" className="nav-button active">Dashboard</Link>
+        <Link to="/income" className="nav-button">Income</Link>
+        <Link to="/expenses" className="nav-button">Expenses</Link>
+        <Link to="/budget" className="nav-button">Budget</Link>
+        <Link to="/financial-report" className="nav-button">Financial Report</Link>
+      </div>
       <div className="cards-grid">
         {cards.map((card, index) => (
           <Card key={index} title={card.title} description={card.description} icon={card.icon} />

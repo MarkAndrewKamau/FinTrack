@@ -28,7 +28,38 @@
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 2rem;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 0 auto 2rem;
+}
+
+.nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(90deg, #6b7280, #9ca3af);
+  color: white;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+  background: linear-gradient(90deg, #4b5563, #6b7280);
+  transform: translateY(-2px);
+}
+
+.nav-button.active {
+  background: linear-gradient(90deg, #3b82f6, #60a5fa);
+}
+
+.nav-button.active:hover {
+  background: linear-gradient(90deg, #2563eb, #3b82f6);
 }
 
 /* Dark mode support */
@@ -43,5 +74,18 @@
     background: #4a2c2a;
     border-color: #7c2d12;
     color: #feb2b2;
+  }
+  .nav-button {
+    background: linear-gradient(90deg, #4b5563, #6b7280);
+    color: #e5e7eb;
+  }
+  .nav-button:hover {
+    background: linear-gradient(90deg, #374151, #4b5563);
+  }
+  .nav-button.active {
+    background: linear-gradient(90deg, #1e40af, #3b82f6);
+  }
+  .nav-button.active:hover {
+    background: linear-gradient(90deg, #1e3a8a, #1e40af);
   }
 }
