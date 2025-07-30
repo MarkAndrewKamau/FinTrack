@@ -18,9 +18,27 @@ export const signup = async (username, email, password) => {
 export const signin = async (username, password) => {
   try {
     const response = await axios.post(`${API_URL}/token/`, { username, password });
-    return response.data;
+    const { access, refresh } = response.data;
+    localStorage.setItem('token', access);
+    localStorage.setItem('refresh', refresh); // Store refresh token
+    return { access, refresh };
   } catch (error) {
-    console.error('Signin error:', error);
+    console.error('Signin error:', error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+export const refreshToken = async () => {
+  const refresh = localStorage.getItem('refresh');
+  if (!refresh) throw new Error('No refresh token available');
+  try {
+    const response = await axios.post(`${API_URL}/token/refresh/`, { refresh });
+    const { access } = response.data;
+    localStorage.setItem('token', access);
+    return access;
+  } catch (error) {
+    console.error('Refresh failed:', error);
     throw error;
   }
 };

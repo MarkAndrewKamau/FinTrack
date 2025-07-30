@@ -22,22 +22,25 @@ const Signin = () => {
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await signin(formData.username, formData.password);
-      console.log('Signin successful:', response);
-
-      if (response && response.access) {
-        localStorage.setItem('token', response.access);
-        navigate('/dashboard');
-      } else {
-        setErrorMessage('Invalid response from the server.');
-      }
-    } catch (error) {
-      console.error('Signin failed:', error);
-      setErrorMessage('Invalid username or password.');
+  e.preventDefault();
+  try {
+    const response = await signin(formData.username, formData.password);
+    if (response.access) {
+      localStorage.setItem('token', response.access);
+      navigate('/dashboard');
     }
-  };
+  } catch (error) {
+    console.error('Signin failed:', error);
+    try {
+      const newToken = await refreshToken();
+      localStorage.setItem('token', newToken);
+      navigate('/dashboard');
+    } catch (refreshError) {
+      console.error('Refresh failed:', refreshError);
+      setErrorMessage('Invalid username or password. Refresh failed.');
+    }
+  }
+};
 
   return (
     <motion.div
