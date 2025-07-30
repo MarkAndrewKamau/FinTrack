@@ -9,12 +9,12 @@ function ExpenseForm({ onSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    const expenseData = { amount, description, date, category };
+    const expenseData = { amount: parseFloat(amount), description, date, category };
 
     const token = localStorage.getItem('token');
 
     try {
-      const response = await fetch('https://finance-tracker-backend-8j8x.onrender.com/api/expenses/', {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/expenses/`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -24,11 +24,12 @@ function ExpenseForm({ onSubmit }) {
       });
 
       if (response.ok) {
+        const newExpense = await response.json(); // Get the created expense from the response
         setAmount('');
         setDescription('');
         setDate('');
         setCategory('');
-        onSubmit();
+        onSubmit(newExpense); // Pass the new expense to update the parent state
       } else {
         console.error('Error creating expense:', response.statusText);
       }
@@ -58,7 +59,7 @@ function ExpenseForm({ onSubmit }) {
           type="text"
           id="description"
           value={description}
-          onChange={(e) => setAmount(e.target.value)}
+          onChange={(e) => setDescription(e.target.value)} // Fixed to setDescription
           required
           placeholder="Enter description"
           className="mt-1 block w-full p-3 rounded-md border-gray-300 shadow-sm text-base focus:border-indigo-500 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 transition duration-200"

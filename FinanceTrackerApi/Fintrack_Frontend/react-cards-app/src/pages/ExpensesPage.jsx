@@ -24,8 +24,9 @@ function ExpensesPage() {
     fetchExpenses();
   }, [fetchExpenses]);
 
-  const handleExpenseSubmit = () => {
-    fetchExpenses();
+  const handleExpenseSubmit = (newExpense) => {
+    setExpenses((prevExpenses) => [...prevExpenses, newExpense]);
+    fetchExpenses(); // Refresh the list from the API
   };
 
   return (
